@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class LoginTest {
     @Test
     public void login(){
-        Configuration.browser="firefox";
+        Configuration.browser="edge";
         open("https://hdn.testrail.io");
         $(byXpath("//input[@name='name']")).sendKeys("hdn_tms@mail.ru");
         $(byXpath("//input[@name='password']")).sendKeys("pVui0CaU1AsUDIXrPMws");
