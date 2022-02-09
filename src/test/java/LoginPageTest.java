@@ -14,12 +14,8 @@ public class LoginPageTest extends BaseTest {
     @Test
     public void logInlogOutCorrectUsernameCorrectPassword(){
         open("/auth/login/");
-        //$(byXpath("//input[@name='name']")).sendKeys("hdn_tms@mail.ru"); //вводим в поле ввода "Email" email пользователя
-        $(byXpath("//input[@name='name']")).setValue("hdn_tms@mail.ru"); //вводим в поле ввода "Email" email пользователя
-
-        //$(byXpath("//input[@name='password']")).sendKeys("pVui0CaU1AsUDIXrPMws"); //вводим в поле ввода "Password" пароль пользователя
-        $(byXpath("//input[@name='password']")).setValue("pVui0CaU1AsUDIXrPMws"); //вводим в поле ввода "Password" пароль пользователя
-
+        $(byXpath("//input[@name='name']")).sendKeys("hdn_tms@mail.ru"); //вводим в поле ввода "Email" email пользователя
+        $(byXpath("//input[@name='password']")).sendKeys("pVui0CaU1AsUDIXrPMws"); //вводим в поле ввода "Password" пароль пользователя
         $(byXpath("//span[@class='loginpage-checkmark']")).click(); //Снимаем флажок "Keep me logged in"
         $(byXpath("//button[@id='button_primary']")).click(); // Кликаем по кнопке "Log in"
         //$(byXpath("//span[contains(text(),'Dima Hilko')]")).shouldBe(visible, Duration.ofSeconds(20)); // Duration.ofSeconds(20) - установка ожидания появления элемента, отличного от установки в BaseTest (там сейчас 5 секунд). На случай, если какие-то части приложения работают медленно
