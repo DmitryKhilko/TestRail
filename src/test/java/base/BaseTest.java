@@ -9,8 +9,8 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class BaseTest {
     @BeforeMethod
     public void setUp(){
-        //Configuration.browser="firefox";
-        Configuration.browser="edge";
+        Configuration.browser="firefox";
+        //Configuration.browser="edge";
         //Configuration.browser="chrome";
         Configuration.headless = true; // браузер запускается без UI. Тесты ускоряются и становятся более стабильными. Браузер использует меньше ОЗУ (где-то в 3 раза). Этот режим просто необходим при параллелоьном запуске тестов
         Configuration.browserSize="1920x1080";
