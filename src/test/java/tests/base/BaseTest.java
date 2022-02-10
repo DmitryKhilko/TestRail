@@ -1,4 +1,4 @@
-package base;
+package tests.base;
 
 import com.codeborne.selenide.Configuration;
 import org.testng.annotations.AfterMethod;
