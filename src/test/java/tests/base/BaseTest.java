@@ -21,7 +21,7 @@ public abstract class BaseTest {
         Configuration.browserSize = "1920x1080";
         //Configuration.baseUrl="https://hdn.testrail.io/index.php?"; // Настройка важна, чтобы быстро переключаться на разные окружения (test, prod и т.п.)
         Configuration.timeout = 10000; // неявное ожидание в милисекундах (10 секунд), указывающее на то, какое максимальное количество времени Selenium будет дожидаться появления элемента (аналог implicitlyWait)
-        //Configuration.fastSetValue = true; //для работы setValue
+        Configuration.fastSetValue = true; //для работы setValue
 
 
         //Инициализация страниц, с которыми мы будем работать в тестах
