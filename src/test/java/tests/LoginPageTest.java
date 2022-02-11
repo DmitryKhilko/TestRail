@@ -11,7 +11,7 @@ public class LoginPageTest extends BaseTest {
         loginPage.IsVisibleLoginButton();
 
         loginPage.login("hdn_tms@mail.ru", "pVui0CaU1AsUDIXrPMws");
-        menuPage.isLoginSuccessful();
+        menuPage.isLoginSuccessful("Dima Hilko");
 
         menuPage.selectMenuItemLogout();
         loginPage.IsVisibleLoginButton();

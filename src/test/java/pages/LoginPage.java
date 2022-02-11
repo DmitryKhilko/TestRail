@@ -12,22 +12,22 @@ public class LoginPage extends BasePage {
     public static final By CHECKMARK = By.xpath("//span[@class='loginpage-checkmark']");
     public static final By LOGIN_BUTTON = By.xpath("//button[@id='button_primary']");
 
-    //Метод открытия станицы с логином
+    //Метод открытия станицы с интерфейсом ввода логина и пароля
     public void openPage() {
         open(BASE_URL + "/auth/login/");
     }
 
-    //Метод определения видимости кнопки Login на странице login
+    //Метод определения успешности окрытия приложения и выхода из приложения
     public void IsVisibleLoginButton(){
-        $(LOGIN_BUTTON).shouldBe(visible); // Проверка успешности выхода из веб-приложения: проверяем наличие кнопки "Log in" на открывшейся странице
+        $(LOGIN_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
     }
 
     //Метод ввода логина, пароля и входа в приложение
     public void login(String userName, String password) {
         $(USERNAME_INPUT).sendKeys(userName); //вводим в поле ввода "Email" email пользователя
         $(PASSWORD_INPUT).sendKeys(password); //вводим в поле ввода "Password" пароль пользователя
-        $(CHECKMARK).click(); //Снимаем флажок "Keep me logged in"
-        $(LOGIN_BUTTON).click(); // Кликаем по кнопке "Log in"
+        $(CHECKMARK).click(); //снимаем флажок "Keep me logged in"
+        $(LOGIN_BUTTON).click(); //кликаем по кнопке "Log in"
     }
 
 //    public String getErrorMessage() {
