@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -16,6 +17,11 @@ public class LoginPage extends BasePage {
         open(BASE_URL + "/auth/login/");
     }
 
+    //Метод определения видимости кнопки Login на странице login
+    public void IsVisibleLoginButton(){
+        $(LOGIN_BUTTON).shouldBe(visible); // Проверка успешности выхода из веб-приложения: проверяем наличие кнопки "Log in" на открывшейся странице
+    }
+
     //Метод ввода логина, пароля и входа в приложение
     public void login(String userName, String password) {
         $(USERNAME_INPUT).sendKeys(userName); //вводим в поле ввода "Email" email пользователя
@@ -27,6 +33,7 @@ public class LoginPage extends BasePage {
 //    public String getErrorMessage() {
 //        return;
 //    }
+
 
 
 
