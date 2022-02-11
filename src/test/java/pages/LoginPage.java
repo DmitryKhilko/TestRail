@@ -2,7 +2,6 @@ package pages;
 
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -17,24 +16,30 @@ public class LoginPage extends BasePage {
         open(BASE_URL + "/auth/login/");
     }
 
-    //Метод определения успешности окрытия приложения и выхода из приложения
-    public void IsVisibleLoginButton(){
-        $(LOGIN_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
+    @Override
+    //Метод, определяющий, что страница загружена, если отображается кнопка "Log in"
+    public boolean isOpenPage() {
+        return isExist(LOGIN_BUTTON);
     }
+
+//    //Метод определения успешности окрытия приложения и выхода из приложения
+//    public void isVisibleLoginButton() {
+//        //$(LOGIN_BUTTON).shouldBe(visible, Duration.ofSeconds(20));
+//        $(LOGIN_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
+//    }
 
     //Метод ввода логина, пароля и входа в приложение
     public void login(String userName, String password) {
-        $(USERNAME_INPUT).sendKeys(userName); //вводим в поле ввода "Email" email пользователя
-        $(PASSWORD_INPUT).sendKeys(password); //вводим в поле ввода "Password" пароль пользователя
+        $(USERNAME_INPUT).setValue(userName); //вводим в поле ввода "Email" email пользователя
+        $(PASSWORD_INPUT).setValue(password); //вводим в поле ввода "Password" пароль пользователя
         $(CHECKMARK).click(); //снимаем флажок "Keep me logged in"
         $(LOGIN_BUTTON).click(); //кликаем по кнопке "Log in"
     }
 
+
 //    public String getErrorMessage() {
 //        return;
 //    }
-
-
 
 
 }
