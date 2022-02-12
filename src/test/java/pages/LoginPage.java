@@ -13,20 +13,8 @@ public class LoginPage extends BasePage {
 
     //Метод открытия станицы с интерфейсом ввода логина и пароля
     public void openPage() {
-        open(BASE_URL + "/auth/login/");
+        open(BASE_URL + "/index.php?/auth/login/");
     }
-
-    @Override
-    //Метод, определяющий, что страница загружена, если отображается кнопка "Log in"
-    public boolean isOpenPage() {
-        return isExist(LOGIN_BUTTON);
-    }
-
-//    //Метод определения успешности окрытия приложения и выхода из приложения
-//    public void isVisibleLoginButton() {
-//        //$(LOGIN_BUTTON).shouldBe(visible, Duration.ofSeconds(20));
-//        $(LOGIN_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
-//    }
 
     //Метод ввода логина, пароля и входа в приложение
     public void login(String userName, String password) {
