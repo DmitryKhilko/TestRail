@@ -17,8 +17,6 @@ public class LoginTest extends BaseTest {
                 .openPage()
                 .login("hdn_tms@mail.ru", "pVui0CaU1AsUDIXrPMws");
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
-        //? как проверку связать с MenuItem
-
     }
 
     @Test

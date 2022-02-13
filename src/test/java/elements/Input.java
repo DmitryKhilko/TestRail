@@ -6,9 +6,10 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class Input {
 
-    String inputLocator = "//input[@id='%s']";
-    String label; //переменная часть локатора (%s)
+    String inputLocator = "//label[text()='%s']/ancestor::div[@class='login-inputx']/input"; //через названии лэйбла веб-элемента, находим сам инпут
+    String label; //переменная часть локатора (%s) - подпись поля ввода, например, "Email"
 
+    //Конструктор
     public Input(String label) {
         this.label = label;
     }
