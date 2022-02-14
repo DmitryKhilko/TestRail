@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Regression Tests" thread-count="2" parallel="tests">
-
-    <listeners>
-        <listener class-name="tests.base.AnnotationTransformer"/>
-    </listeners>
+<suite thread-count="2" name="Test suite" parallel="tests">
 
     <test name="test 1">
-         <classes>
+        <classes>
             <class name="tests.LoginTest"/>
         </classes>
     </test>
