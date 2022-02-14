@@ -1,8 +1,5 @@
 package tests;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
-import io.qameta.allure.TmsLink;
 import org.testng.annotations.Test;
 import tests.base.BaseTest;
 
@@ -12,22 +9,18 @@ import static com.codeborne.selenide.Selenide.$;
 import static pages.LoginPage.LOGINPAGE_BUTTON;
 import static pages.MenuPage.TOPMENU_ITEM_USERNAME;
 
-public class LoginTest extends BaseTest {
+public class TestCaseTest extends BaseTest {
 
-    @TmsLink("8537") //ссылка на тест-кейс в TMS
-    @Issue("1988") //ссылка на баг-репорт
-    @Description("Проверить после входа в приложение наличие пункта меню с именем текущего пользователя")
-    @Test(description = "Войти в приложение с корректными значениями логина и пароля", groups = {"smoke"})
-    public void logInValidUsernameAndPassword() {
+    @Test (description = "Создать тест-кейс", groups = {"smoke"})
+    public void createTestCase() {
         loginPage
                 .openPage()
                 .login("hdn_tms@mail.ru", "pVui0CaU1AsUDIXrPMws");
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
     }
 
-    @Description("Проверить после выхода из приложение на странице логина наличие кнопки 'Log in'")
-    @Test (description = "Выйти из приложения")
-    public void logOut() {
+    @Test (description = "Удалить тест-кейс")
+    public void deleteTestCase() {
         loginPage
                 .openPage()
                 .login("hdn_tms@mail.ru", "pVui0CaU1AsUDIXrPMws")
@@ -38,5 +31,19 @@ public class LoginTest extends BaseTest {
 
 
 
-
+//    @Test
+//    public void logInCorrectUsernameCorrectPassword() {
+//        loginPage.openPage();
+//        loginPage.login("hdn_tms@mail.ru", "pVui0CaU1AsUDIXrPMws");
+//        $(MENU_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
+//    }
+//
+//    @Test
+//    public void logOut() {
+//        loginPage.openPage();
+//        loginPage.login("hdn_tms@mail.ru", "pVui0CaU1AsUDIXrPMws");
+//
+//        menuPage.selectMenuItemLogout();
+//        $(LOGIN_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
+//    }
 }

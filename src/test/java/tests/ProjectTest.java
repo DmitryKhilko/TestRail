@@ -11,7 +11,7 @@ import static pages.MenuPage.TOPMENU_ITEM_USERNAME;
 
 public class ProjectTest extends BaseTest {
 
-    @Test (groups = {"smoke"})
+    @Test (description = "Создать проект", groups = {"smoke"})
     public void createProject() {
         loginPage
                 .openPage()
@@ -19,7 +19,7 @@ public class ProjectTest extends BaseTest {
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
     }
 
-    @Test
+    @Test (description = "Удалить проект")
     public void deleteProject() {
         loginPage
                 .openPage()
