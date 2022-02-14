@@ -25,7 +25,7 @@ public class LoginTest extends BaseTest {
         loginPage
                 .openPage()
                 .login("hdn_tms@mail.ru", "pVui0CaU1AsUDIXrPMws");
-        log.debug("Тест " + context.getAttribute("testName") + ": проверить, вошли ли в приложение - в меню должен отображаться текущий пользователь '" + $(TOPMENU_ITEM_USERNAME).getText()+"'");
+        log.debug("Тест " + context.getAttribute("testName") + ": проверить, вошли ли в приложение - в меню должен отображаться текущий пользователь");
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
     }
 
@@ -35,9 +35,9 @@ public class LoginTest extends BaseTest {
         loginPage
                 .openPage()
                 .login("hdn_tms@mail.ru", "pVui0CaU1AsUDIXrPMws")
+                .openUserMenu()
                 .selectMenuItemLogout();
-        log.debug("Тест " + context.getAttribute("testName") + ": проверить, вышли ли из приложения - на странице должна отображаться кнопка '" + $(LOGINPAGE_BUTTON).getText()+"'");
-        //log.debug("Тест " + context.getAttribute("testName") + ": проверить, вышли ли из приложения - на странице должна отображаться кнопка 'Log in'");
+        log.debug("Тест " + context.getAttribute("testName") + ": проверить, вышли ли из приложения - на странице должна отображаться кнопка 'Log in'");
         $(LOGINPAGE_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
     }
 

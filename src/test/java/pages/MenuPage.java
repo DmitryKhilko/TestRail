@@ -18,9 +18,10 @@ public class MenuPage extends BasePage {
 
     //Метод открытия меню, связанного с текущим пользователем
     @Step("Кликнуть по пункту меню с именем текущего пользователя, чтобы открыть меню")
-    public void openUserMenu() {
-        log.debug("Тест " + context.getAttribute("testName") + ": кликнуть по пункту меню '" + $(TOPMENU_ITEM_USERNAME).getText() + "', чтобы открыть вложенное меню");
+    public MenuPage openUserMenu() {
+        log.debug("Тест " + context.getAttribute("testName") + ": кликнуть по пункту меню с именем текущего пользователя, чтобы открыть вложенное меню");
         $(TOPMENU_ITEM_USERNAME).click(); //кликаем по пункту меню "Dima Hilko"
+        return this;
     }
 
     //Метод выбора пункта меню "My Settings"
@@ -34,7 +35,6 @@ public class MenuPage extends BasePage {
     //В соответствии с паттерном Fluent/Chain of Invocations после выхода мы оказываемся на странице loginPage, метод будет возвращать данную страницу и появляется команда "return new LoginPage();"
     @Step("Выбрать пункт меню Logout для выхода из приложения")
     public LoginPage selectMenuItemLogout() {
-        openUserMenu();
         log.debug("Тест " + context.getAttribute("testName") + ": для выхода из приложения кликнуть по пункту меню 'Logout'");
         new MenuItem("Logout").select(); //в раскрывшемся меню кликаем по пункту меню "Logout"
         return new LoginPage(context);

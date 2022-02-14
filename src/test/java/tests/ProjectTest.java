@@ -24,6 +24,7 @@ public class ProjectTest extends BaseTest {
         loginPage
                 .openPage()
                 .login("hdn_tms@mail.ru", "pVui0CaU1AsUDIXrPMws")
+                .openUserMenu()
                 .selectMenuItemLogout();
         $(LOGINPAGE_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
     }
