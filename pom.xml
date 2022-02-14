@@ -14,9 +14,39 @@
         <maven.compiler.target>11</maven.compiler.target>
         <testng.version>7.5</testng.version>
         <selenide.version>6.2.1</selenide.version>
+        <allure-selenide.version>2.17.2</allure-selenide.version>
+        <aspectjweaver.version>1.9.6</aspectjweaver.version>
+        <allure-maven.version>2.10.0</allure-maven.version>
+        <allure-testng.version>2.17.2</allure-testng.version>
+
     </properties>
 
+    <build>
+         <plugins>
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-surefire-plugin</artifactId>
+                 <version>3.0.0-M3</version>
+                 <configuration>
+                     <argLine>
+                         -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/1.9.6/aspectjweaver-1.9.6.jar -Xmx256m
+                     </argLine>
+                 </configuration>
+             </plugin>
+             <plugin>
+                 <groupId>io.qameta.allure</groupId>
+                 <artifactId>allure-maven</artifactId>
+                 <version>${allure-maven.version}</version>
+             </plugin>
+         </plugins>
+    </build>
+
     <dependencies>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectjweaver.version}</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency>
@@ -32,6 +62,22 @@
             <artifactId>selenide</artifactId>
             <version>${selenide.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-selenide -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-selenide</artifactId>
+            <version>${allure-selenide.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-testng -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure-testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
     
