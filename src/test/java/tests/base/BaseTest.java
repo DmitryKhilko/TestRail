@@ -2,18 +2,17 @@ package tests.base;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.extern.log4j.Log4j2;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 import pages.DashbordPage;
 import pages.LoginPage;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 @Log4j2
+@Listeners({ ScreenShooter.class}) //подготовка для принудительного создания скриншотов (даже для зеленых тестов)
 public abstract class BaseTest {
     public LoginPage loginPage;
     //public MenuPage menuPage;

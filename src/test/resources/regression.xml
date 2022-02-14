@@ -2,6 +2,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite thread-count="3" name="Test suite" parallel="tests">
 
+    <listeners>
+        <listener class-name="tests.base.AnnotationTransformer"/>
+    </listeners>
+
     <test name="test 1">
         <classes>
             <class name="tests.LoginTest"/>

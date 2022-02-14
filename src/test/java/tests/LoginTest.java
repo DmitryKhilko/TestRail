@@ -1,5 +1,6 @@
 package tests;
 
+import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.TmsLink;
@@ -12,13 +13,14 @@ import static com.codeborne.selenide.Selenide.$;
 import static pages.LoginPage.LOGINPAGE_BUTTON;
 import static pages.MenuPage.TOPMENU_ITEM_USERNAME;
 
-public class LoginTest extends BaseTest {
 
+public class LoginTest extends BaseTest {
     @TmsLink("8537") //ссылка на тест-кейс в TMS
     @Issue("1988") //ссылка на баг-репорт
-    @Description("Проверить после входа в приложение наличие пункта меню с именем текущего пользователя")
-    @Test(description = "Войти в приложение с корректными значениями логина и пароля", groups = {"smoke"})
+    @Description("Проверить после входа в приложение наличие пункта меню с именем текущего пользователя") //описание теста
+    @Test(description = "Войти в приложение с корректными значениями логина и пароля", groups = {"smoke"})//название теста, название группы
     public void logInValidUsernameAndPassword() {
+        ScreenShooter.captureSuccessfulTests = true;
         loginPage
                 .openPage()
                 .login("hdn_tms@mail.ru", "pVui0CaU1AsUDIXrPMws");
