@@ -3,6 +3,8 @@ package tests.base;
 import com.codeborne.selenide.Configuration;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import pages.DashbordPage;
 import pages.LoginPage;
 
@@ -13,12 +15,19 @@ public abstract class BaseTest {
     //public MenuPage menuPage;
     public DashbordPage dashbordPage;
 
+    @Parameters({"browser"})
     @BeforeMethod //Предусловие
-    public void setUp() {
-        //Configuration.browser = "firefox";
-        //Configuration.browser = "edge";
-        Configuration.browser = "chrome";
-        Configuration.headless = true; // браузер запускается без UI. Тесты ускоряются и становятся более стабильными. Браузер использует меньше ОЗУ (где-то в 3 раза). Этот режим просто необходим при параллелоьном запуске тестов
+    public void setUp(@Optional("chrome") String browser) { //@Optional ("chrome") - если не будет передаваться парметр "browser", то запустится по умолчанию в chrome
+        //Выбор, в каком браузере должен запускаться тест
+        if (browser.equals("chrome")) {
+            Configuration.browser = "chrome";
+        } else if (browser.equals("firefox")) {
+            Configuration.browser = "firefox";
+        } else if (browser.equals("edge")) {
+            Configuration.browser = "edge";
+        }
+
+        //Configuration.headless = true; // браузер запускается без UI. Тесты ускоряются и становятся более стабильными. Браузер использует меньше ОЗУ (где-то в 3 раза). Этот режим просто необходим при параллелоьном запуске тестов
         Configuration.browserPosition = "0x0"; //команда задает позицию левого верхнего угла браузера. Без нее браузер при запуске смещен немного вправо, что может привести к невидимости каких-то элементов.
         Configuration.browserSize = "1920x1080"; //задает разрешение, с каким запускается браузер. Этот параметр, как и виды браузеров важен и может потребоваться тестировать на разных разрешениях.
         Configuration.timeout = 10000; // неявное ожидание в милисекундах (10 секунд), указывающее на то, какое максимальное количество времени Selenium будет дожидаться появления элемента (аналог implicitlyWait)

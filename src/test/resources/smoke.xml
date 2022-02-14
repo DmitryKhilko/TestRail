@@ -5,7 +5,7 @@
 <!--    https://testng.org/doc/documentation-main.html#test-groups-->
 
     <listeners>
-        <listener class-name="tests.base.AnnotationTransformer"></listener>
+        <listener class-name="tests.base.AnnotationTransformer"/>
     </listeners>
 
     <test name="Test1">

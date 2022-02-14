@@ -3,7 +3,7 @@
 <suite name="Regression Tests" thread-count="2" parallel="tests">
 
     <listeners>
-        <listener class-name="tests.base.AnnotationTransformer"></listener>
+        <listener class-name="tests.base.AnnotationTransformer"/>
     </listeners>
 
     <test name="test 1">
