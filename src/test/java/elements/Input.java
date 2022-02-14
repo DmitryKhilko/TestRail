@@ -16,6 +16,7 @@ public class Input {
 
     //Создаем метод записи в поле ввода какого-то значения с понятным для человека названием "write"
     public void write(String text) {
-        $(By.xpath(String.format(inputLocator,this.label))).setValue(text);
+        $(By.xpath(String.format(inputLocator,this.label))).clear(); //сначала очищаем поле
+        $(By.xpath(String.format(inputLocator,this.label))).setValue(text); //потом вводим текст
     }
 }

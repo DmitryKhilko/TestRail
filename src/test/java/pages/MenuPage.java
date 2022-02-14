@@ -17,6 +17,7 @@ public class MenuPage extends BasePage {
     public void selectMenuItemMySettings() {
         openUserMenu();
         new MenuItem("My Settings").select(); //в раскрывшемся меню кликаем по пункту меню "My Settings"
+        //todo добавить инициализацию страницы настроек
     }
 
     //Метод выбора пункта меню "Logout"
