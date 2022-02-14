@@ -5,24 +5,27 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.extern.log4j.Log4j2;
+import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.DashbordPage;
 import pages.LoginPage;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
-@Log4j2
-@Listeners({ ScreenShooter.class}) //подготовка для принудительного создания скриншотов (даже для зеленых тестов)
+@Log4j2 //аннотация для вставки в клласс команд логирования
+@Listeners({ ScreenShooter.class}) //аннотация для подготовки для принудительного создания скриншотов (даже для зеленых тестов)
 public abstract class BaseTest {
     public LoginPage loginPage;
     //public MenuPage menuPage;
     public DashbordPage dashbordPage;
 
-    @Parameters({"browser"})
+    @Parameters({"browser"}) //параметр из файла regression_multi_browser.xml (для запуска тестов в нескольких браузерах параллельно)
     @BeforeMethod (description = "Настроить и открыть браузер")//Предусловие
-    public void setUp(@Optional("chrome") String browser) { //@Optional ("chrome") - если не будет передаваться парметр "browser", то запустится по умолчанию в chrome
+    public void setUp(@Optional("chrome") String browser, ITestContext context, ITestResult result) { //@Optional ("chrome") - если не будет передаваться парметр "browser", то запустится по умолчанию в chrome
+        log.info("Тест " + result.getMethod().getMethodName() + ": старт"); //команда лога, куда передается имя выполняемого теста
 
-        log.debug("Передать в тест параметр 'browser': " + browser);
+        //log.debug("Передать  из 'multi_browser.xml' в тест " + result.getMethod().getMethodName() + " параметр 'browser' со значением: " + browser); //лог для проверки параллельного запуска тестов в нескольких браузерах
 
         //Выбор, в каком браузере должен запускаться тест
         if (browser.equals("chrome")) {
@@ -41,14 +44,17 @@ public abstract class BaseTest {
         Configuration.savePageSource = false; //при падении теста не сохраняет Page source (file:/D:/Projects/TestRail/build/reports/tests/1644796597073.11.html)
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false)); //Для взаимодействия Selenide и Allure (https://ru.selenide.org/documentation/reports.html#allure-report)
 
+        context.setAttribute("testName", result.getMethod().getMethodName()); //передаем имя файла в методы тестового фреймворка для наглядного формирования логов
+
         //Инициализация страниц (которые описаны в пакете pages), с которыми мы будем работать в тестах
-        loginPage = new LoginPage();
-        //menuPage = new MenuPage(); вызываю страницу из метода login
-        dashbordPage = new DashbordPage();
+        loginPage = new LoginPage(context);
+        //menuPage = new MenuPage(context); вызываю страницу из метода login
+        dashbordPage = new DashbordPage(context);
     }
 
     @AfterMethod(alwaysRun = true, description = "Закрыть браузер") //Постусловие
-    public void tearDown() {
+    public void tearDown(ITestResult result) {
         getWebDriver().quit(); //явным образом после каждого теста, расположенного в классе, закрываем браузер, так как по умолчанию в Selenide браузер закрывается по завершению всех методов класса
+        log.info("Тест " + result.getMethod().getMethodName() + ": завершение"); //команда лога, куда передается имя выполняемого теста
     }
 }

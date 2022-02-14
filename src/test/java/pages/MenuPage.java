@@ -2,16 +2,24 @@ package pages;
 
 import elements.MenuItem;
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
+import org.testng.ITestContext;
 
 import static com.codeborne.selenide.Selenide.$;
 
+@Log4j2
 public class MenuPage extends BasePage {
     public static final By TOPMENU_ITEM_USERNAME = By.xpath("//a[@id = 'navigation-user']");
+
+    public MenuPage(ITestContext context) {
+        super(context);
+    }
 
     //Метод открытия меню, связанного с текущим пользователем
     @Step("Кликнуть по пункту меню с именем текущего пользователя, чтобы открыть меню")
     public void openUserMenu() {
+        log.debug("Тест " + context.getAttribute("testName") + ": кликнуть по пункту меню '" + $(TOPMENU_ITEM_USERNAME).getText() + "', чтобы открыть вложенное меню");
         $(TOPMENU_ITEM_USERNAME).click(); //кликаем по пункту меню "Dima Hilko"
     }
 
@@ -27,7 +35,8 @@ public class MenuPage extends BasePage {
     @Step("Выбрать пункт меню Logout для выхода из приложения")
     public LoginPage selectMenuItemLogout() {
         openUserMenu();
+        log.debug("Тест " + context.getAttribute("testName") + ": для выхода из приложения кликнуть по пункту меню 'Logout'");
         new MenuItem("Logout").select(); //в раскрывшемся меню кликаем по пункту меню "Logout"
-        return new LoginPage();
+        return new LoginPage(context);
     }
 }
