@@ -40,15 +40,6 @@ public abstract class BaseTest {
                 break;
         }
 
-//        if (browser.equals("chrome")) {
-//            Configuration.browser = "chrome";
-//        } else if (browser.equals("firefox")) {
-//            Configuration.browser = "firefox";
-//        } else if (browser.equals("edge")) {
-//            Configuration.browser = "edge";
-//        }
-
-
         Configuration.headless = true; // браузер запускается без UI. Тесты ускоряются и становятся более стабильными. Браузер использует меньше ОЗУ (где-то в 3 раза). Этот режим просто необходим при параллелоьном запуске тестов
         Configuration.browserPosition = "0x0"; //команда задает позицию левого верхнего угла браузера. Без нее браузер при запуске смещен немного вправо, что может привести к невидимости каких-то элементов.
         Configuration.browserSize = "1920x1080"; //задает разрешение, с каким запускается браузер. Этот параметр, как и виды браузеров важен и может потребоваться тестировать на разных разрешениях.
