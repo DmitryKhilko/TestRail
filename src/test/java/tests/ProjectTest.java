@@ -21,9 +21,10 @@ public class ProjectTest extends BaseTest {
                 .clickCheckark("Keep me logged in")
                 .clickButton("Log In");
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
+
     }
 
-    @Test (description = "Удалить проект")
+    @Test (description = "Удалить тест-кейс")
     public void deleteProject() {
         loginPage
                 .openPage("/index.php?/auth/login/")
@@ -35,4 +36,5 @@ public class ProjectTest extends BaseTest {
                 .selectMenuItem("Logout");
         $(LOGINPAGE_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
     }
+
 }

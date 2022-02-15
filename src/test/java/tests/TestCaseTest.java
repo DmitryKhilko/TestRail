@@ -13,6 +13,7 @@ public class TestCaseTest extends BaseTest {
 
     @Test (description = "Создать тест-кейс", groups = {"smoke"})
     public void createTestCase() {
+        //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage
                 .openPage("/index.php?/auth/login/")
                 .writeLogin("Email","hdn_tms@mail.ru")
