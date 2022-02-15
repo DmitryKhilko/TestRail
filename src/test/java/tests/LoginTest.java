@@ -23,8 +23,11 @@ public class LoginTest extends BaseTest {
     public void logInValidUsernameAndPassword(ITestContext context) {
         //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage
-                .openPage()
-                .login("hdn_tms@mail.ru", "pVui0CaU1AsUDIXrPMws");
+                .openPage("/index.php?/auth/login/")
+                .writeLogin("Email","hdn_tms@mail.ru")
+                .writePassword("Password","pVui0CaU1AsUDIXrPMws")
+                .clickCheckark("Keep me logged in")
+                .clickButton("Log In");
         log.debug("Тест " + context.getAttribute("testName") + ": проверить, вошли ли в приложение - в меню должен отображаться текущий пользователь");
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
     }
@@ -33,16 +36,14 @@ public class LoginTest extends BaseTest {
     @Test (description = "Выйти из приложения")
     public void logOut(ITestContext context) {
         loginPage
-                .openPage()
-                .login("hdn_tms@mail.ru", "pVui0CaU1AsUDIXrPMws")
+                .openPage("/index.php?/auth/login/")
+                .writeLogin("Email","hdn_tms@mail.ru")
+                .writePassword("Password","pVui0CaU1AsUDIXrPMws")
+                .clickCheckark("Keep me logged in")
+                .clickButton("Log In")
                 .openUserMenu()
-                .selectMenuItemLogout();
+                .selectMenuItem("Logout");
         log.debug("Тест " + context.getAttribute("testName") + ": проверить, вышли ли из приложения - на странице должна отображаться кнопка 'Log in'");
         $(LOGINPAGE_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
     }
-
-
-
-
-
 }

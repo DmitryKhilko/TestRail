@@ -34,9 +34,9 @@ public class MenuPage extends BasePage {
     //Метод выбора пункта меню "Logout"
     //В соответствии с паттерном Fluent/Chain of Invocations после выхода мы оказываемся на странице loginPage, метод будет возвращать данную страницу и появляется команда "return new LoginPage();"
     @Step("Выбрать пункт меню Logout для выхода из приложения")
-    public LoginPage selectMenuItemLogout() {
+    public LoginPage selectMenuItem(String actualMenuItem) {
         log.debug("Тест " + context.getAttribute("testName") + ": для выхода из приложения кликнуть по пункту меню 'Logout'");
-        new MenuItem("Logout").select(); //в раскрывшемся меню кликаем по пункту меню "Logout"
+        new MenuItem(actualMenuItem).select(); //в раскрывшемся меню кликаем по пункту меню "Logout"
         return new LoginPage(context);
     }
 }
