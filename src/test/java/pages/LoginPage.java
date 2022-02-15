@@ -5,16 +5,12 @@ import elements.Checboks;
 import elements.Input;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
-import org.openqa.selenium.By;
 import org.testng.ITestContext;
 
 import static com.codeborne.selenide.Selenide.open;
 
 @Log4j2
 public class LoginPage extends BasePage {
-    public static final By LOGINPAGE_BUTTON = By.xpath("//button[@id='button_primary']");
-    String loginpageCheckmark = "//label[contains(text(),'%s')]/span[@class='loginpage-checkmark']";
-
 
     public LoginPage(ITestContext context) {
         super(context);
@@ -50,10 +46,4 @@ public class LoginPage extends BasePage {
         new Button(buttonName).click(buttonName);
         return new MenuPage(context); //Инициализуем страницу, с которой дальше будем работать
     }
-
-//    public String getErrorMessage() {
-//        return;
-//    }
-
-
 }

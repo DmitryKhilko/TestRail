@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Smoke Tests" thread-count="2" parallel="tests" >
+<suite name="Smoke Tests" thread-count="3" parallel="tests" >
 
 <!--    https://testng.org/doc/documentation-main.html#test-groups-->
 
@@ -20,6 +20,17 @@
     </test>
 
     <test name="Test2">
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.ProjectTest"/>
+        </classes>
+    </test>
+
+    <test name="Test3">
         <groups>
             <run>
                 <include name="smoke"/>

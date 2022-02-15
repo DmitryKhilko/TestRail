@@ -6,8 +6,7 @@ import tests.base.BaseTest;
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static pages.LoginPage.LOGINPAGE_BUTTON;
-import static pages.MenuPage.TOPMENU_ITEM_USERNAME;
+import static pages.BasePage.*;
 
 public class TestCaseTest extends BaseTest {
 
