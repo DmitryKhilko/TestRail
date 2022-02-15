@@ -19,14 +19,14 @@ public class LoginTest extends BaseTest {
     @TmsLink("8537") //ссылка на тест-кейс в TMS
     @Issue("1988") //ссылка на баг-репорт
     @Description("Проверить после входа в приложение наличие пункта меню с именем текущего пользователя") //описание теста
-    @Test(description = "Войти в приложение с корректными значениями логина и пароля", groups = {"smoke"})//название теста, название группы
+    @Test(description = "Войти в приложение (валидные логин и пароль)", groups = {"smoke"})//название теста, название группы
     public void logInValidUsernameAndPassword(ITestContext context) {
         //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage
                 .openPage("/index.php?/auth/login/")
-                .writeLogin("Email","hdn_tms@mail.ru")
-                .writePassword("Password","pVui0CaU1AsUDIXrPMws")
-                .clickCheckark("Keep me logged in")
+                .writeInput("Email","hdn_tms@mail.ru")
+                .writeInput("Password","pVui0CaU1AsUDIXrPMws")
+                .clickCheckboks("Keep me logged in")
                 .clickButton("Log In");
         log.debug("Тест " + context.getAttribute("testName") + ": проверить, вошли ли в приложение - в меню должен отображаться текущий пользователь");
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
@@ -37,11 +37,11 @@ public class LoginTest extends BaseTest {
     public void logOut(ITestContext context) {
         loginPage
                 .openPage("/index.php?/auth/login/")
-                .writeLogin("Email","hdn_tms@mail.ru")
-                .writePassword("Password","pVui0CaU1AsUDIXrPMws")
-                .clickCheckark("Keep me logged in")
+                .writeInput("Email","hdn_tms@mail.ru")
+                .writeInput("Password","pVui0CaU1AsUDIXrPMws")
+                .clickCheckboks("Keep me logged in")
                 .clickButton("Log In")
-                .openUserMenu()
+                .selectMenuItem("Dima Hilko")
                 .selectMenuItem("Logout");
         log.debug("Тест " + context.getAttribute("testName") + ": проверить, вышли ли из приложения - на странице должна отображаться кнопка 'Log in'");
         $(LOGINPAGE_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице

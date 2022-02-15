@@ -16,23 +16,23 @@ public class ProjectTest extends BaseTest {
         //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage
                 .openPage("/index.php?/auth/login/")
-                .writeLogin("Email","hdn_tms@mail.ru")
-                .writePassword("Password","pVui0CaU1AsUDIXrPMws")
-                .clickCheckark("Keep me logged in")
+                .writeInput("Email","hdn_tms@mail.ru")
+                .writeInput("Password","pVui0CaU1AsUDIXrPMws")
+                .clickCheckboks("Keep me logged in")
                 .clickButton("Log In");
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
 
     }
 
-    @Test (description = "Удалить тест-кейс")
+    @Test (description = "Удалить проект")
     public void deleteProject() {
         loginPage
                 .openPage("/index.php?/auth/login/")
-                .writeLogin("Email","hdn_tms@mail.ru")
-                .writePassword("Password","pVui0CaU1AsUDIXrPMws")
-                .clickCheckark("Keep me logged in")
+                .writeInput("Email","hdn_tms@mail.ru")
+                .writeInput("Password","pVui0CaU1AsUDIXrPMws")
+                .clickCheckboks("Keep me logged in")
                 .clickButton("Log In")
-                .openUserMenu()
+                .selectMenuItem("Dima Hilko")
                 .selectMenuItem("Logout");
         $(LOGINPAGE_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
     }

@@ -28,15 +28,28 @@ public abstract class BaseTest {
         log.debug("Передать  из 'multi_browser.xml' в тест " + result.getMethod().getMethodName() + " параметр 'browser' со значением: " + browser); //лог для проверки параллельного запуска тестов в нескольких браузерах
 
         //Выбор, в каком браузере должен запускаться тест
-        if (browser.equals("chrome")) {
-            Configuration.browser = "chrome";
-        } else if (browser.equals("firefox")) {
-            Configuration.browser = "firefox";
-        } else if (browser.equals("edge")) {
-            Configuration.browser = "edge";
+        switch (browser) {
+            case "chrome":
+                Configuration.browser = "chrome";
+                break;
+            case "firefox":
+                Configuration.browser = "firefox";
+                break;
+            case "edge":
+                Configuration.browser = "edge";
+                break;
         }
 
-        //Configuration.headless = true; // браузер запускается без UI. Тесты ускоряются и становятся более стабильными. Браузер использует меньше ОЗУ (где-то в 3 раза). Этот режим просто необходим при параллелоьном запуске тестов
+//        if (browser.equals("chrome")) {
+//            Configuration.browser = "chrome";
+//        } else if (browser.equals("firefox")) {
+//            Configuration.browser = "firefox";
+//        } else if (browser.equals("edge")) {
+//            Configuration.browser = "edge";
+//        }
+
+
+        Configuration.headless = true; // браузер запускается без UI. Тесты ускоряются и становятся более стабильными. Браузер использует меньше ОЗУ (где-то в 3 раза). Этот режим просто необходим при параллелоьном запуске тестов
         Configuration.browserPosition = "0x0"; //команда задает позицию левого верхнего угла браузера. Без нее браузер при запуске смещен немного вправо, что может привести к невидимости каких-то элементов.
         Configuration.browserSize = "1920x1080"; //задает разрешение, с каким запускается браузер. Этот параметр, как и виды браузеров важен и может потребоваться тестировать на разных разрешениях.
         Configuration.timeout = 10000; // неявное ожидание в милисекундах (10 секунд), указывающее на то, какое максимальное количество времени Selenium будет дожидаться появления элемента (аналог implicitlyWait)

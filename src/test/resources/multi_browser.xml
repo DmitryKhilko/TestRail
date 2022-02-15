@@ -13,7 +13,7 @@
         </classes>
     </test>
     <test name="test 2">
-        <parameter name="browser" value="firefox"/>
+        <parameter name="browser" value="chrome"/>
         <classes>
             <class name="tests.LoginTest"/>
         </classes>
