@@ -24,7 +24,6 @@ public abstract class BaseTest {
     @BeforeMethod (description = "Настроить и открыть браузер")//Предусловие
     public void setUp(@Optional("chrome") String browser, ITestContext context, ITestResult result) { //@Optional ("chrome") - если не будет передаваться парметр "browser", то запустится по умолчанию в chrome
         log.info("Тест " + result.getMethod().getMethodName() + ": старт"); //команда лога, куда передается имя выполняемого теста
-
         log.debug("Передать  из 'multi_browser.xml' в тест " + result.getMethod().getMethodName() + " параметр 'browser' со значением: " + browser); //лог для проверки параллельного запуска тестов в нескольких браузерах
 
         //Выбор, в каком браузере должен запускаться тест
@@ -40,7 +39,7 @@ public abstract class BaseTest {
                 break;
         }
 
-        Configuration.headless = true; // браузер запускается без UI. Тесты ускоряются и становятся более стабильными. Браузер использует меньше ОЗУ (где-то в 3 раза). Этот режим просто необходим при параллелоьном запуске тестов
+        //Configuration.headless = true; // браузер запускается без UI. Тесты ускоряются и становятся более стабильными. Браузер использует меньше ОЗУ (где-то в 3 раза). Этот режим просто необходим при параллелоьном запуске тестов
         Configuration.browserPosition = "0x0"; //команда задает позицию левого верхнего угла браузера. Без нее браузер при запуске смещен немного вправо, что может привести к невидимости каких-то элементов.
         Configuration.browserSize = "1920x1080"; //задает разрешение, с каким запускается браузер. Этот параметр, как и виды браузеров важен и может потребоваться тестировать на разных разрешениях.
         Configuration.timeout = 10000; // неявное ожидание в милисекундах (10 секунд), указывающее на то, какое максимальное количество времени Selenium будет дожидаться появления элемента (аналог implicitlyWait)
@@ -48,7 +47,7 @@ public abstract class BaseTest {
         Configuration.savePageSource = false; //при падении теста не сохраняет Page source (file:/D:/Projects/TestRail/build/reports/tests/1644796597073.11.html)
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false)); //Для взаимодействия Selenide и Allure (https://ru.selenide.org/documentation/reports.html#allure-report)
 
-        context.setAttribute("testName", result.getMethod().getMethodName()); //передаем имя файла в методы тестового фреймворка для наглядного формирования логов
+        context.setAttribute("testName", result.getMethod().getMethodName()); //передаем имя выполняемого теста в методы тестового фреймворка для наглядного формирования логов
 
         //Инициализация страниц (которые описаны в пакете pages), с которыми мы будем работать в тестах
         loginPage = new LoginPage(context);
