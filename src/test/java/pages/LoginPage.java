@@ -19,7 +19,7 @@ public class LoginPage extends BasePage {
     //В соответствии с паттерном Fluent/Chain of Invocations метод возвращает страницу LoginPage и появляется команда "return this;"
     @Step("Открыть стартовую страницу приложения")
     public LoginPage openPage(String loginUrl) {
-        log.debug("Тест " + context.getAttribute("testName") + ": открыть страницу логина " + BASE_URL + "/index.php?/auth/login/");
+        log.debug("Тест " + context.getAttribute("testName") + ": открыть страницу логина " + BASE_URL + loginUrl);
         open(BASE_URL + loginUrl);
         return this; //возвращаем текущую страницу
     }

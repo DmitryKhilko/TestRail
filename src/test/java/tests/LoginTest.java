@@ -9,7 +9,9 @@ import org.testng.annotations.Test;
 import tests.base.BaseTest;
 
 import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static pages.BasePage.LOGINPAGE_BUTTON;
 import static pages.BasePage.TOPMENU_ITEM_USERNAME;
 
 @Log4j2
@@ -21,7 +23,7 @@ public class LoginTest extends BaseTest {
     public void logInValidUsernameAndPassword(ITestContext context) {
         //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage
-                .openPage("/index.php?/auth/login/")
+                .openPage("/auth/login/")
                 .writeInput("Email","hdn_tms@mail.ru")
                 .writeInput("Password","pVui0CaU1AsUDIXrPMws")
                 .clickCheckboks("Keep me logged in")
@@ -30,18 +32,18 @@ public class LoginTest extends BaseTest {
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
     }
 
-//    @Description("Проверить после выхода из приложение на странице логина наличие кнопки 'Log in'")
-//    @Test (description = "Выйти из приложения")
-//    public void logOut(ITestContext context) {
-//        loginPage
-//                .openPage("/index.php?/auth/login/")
-//                .writeInput("Email","hdn_tms@mail.ru")
-//                .writeInput("Password","pVui0CaU1AsUDIXrPMws")
-//                .clickCheckboks("Keep me logged in")
-//                .clickButton("Log In")
-//                .selectMenuItem("Dima Hilko")
-//                .selectMenuItem("Logout");
-//        log.debug("Тест " + context.getAttribute("testName") + ": проверить, вышли ли из приложения - на странице должна отображаться кнопка 'Log in'");
-//        $(LOGINPAGE_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
-//    }
+    @Description("Проверить после выхода из приложение на странице логина наличие кнопки 'Log in'")
+    @Test (description = "Выйти из приложения")
+    public void logOut(ITestContext context) {
+        loginPage
+                .openPage("/auth/login/")
+                .writeInput("Email","hdn_tms@mail.ru")
+                .writeInput("Password","pVui0CaU1AsUDIXrPMws")
+                .clickCheckboks("Keep me logged in")
+                .clickButton("Log In")
+                .selectMenuItem("Dima Hilko")
+                .selectMenuItem("Logout");
+        log.debug("Тест " + context.getAttribute("testName") + ": проверить, вышли ли из приложения - на странице должна отображаться кнопка 'Log in'");
+        $(LOGINPAGE_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
+    }
 }
