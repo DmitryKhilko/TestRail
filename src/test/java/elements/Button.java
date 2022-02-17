@@ -10,9 +10,9 @@ public class Button {
     String buttonLocatorName2; //переменная часть локатора (%s) - название кнопки для второго xpath
 
     //Конструктор
-    public Button(String label) {
-        this.buttonLocatorName1 = label;
-        this.buttonLocatorName2 = label;
+    public Button(String buttonLocatorName1, String buttonLocatorName2) {
+        this.buttonLocatorName1 = buttonLocatorName1;
+        this.buttonLocatorName2 = buttonLocatorName2;
     }
 
     //Создаем метод клика по кнопке

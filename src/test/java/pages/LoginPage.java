@@ -19,15 +19,15 @@ public class LoginPage extends BasePage {
     //В соответствии с паттерном Fluent/Chain of Invocations метод возвращает страницу LoginPage и появляется команда "return this;"
     @Step("Открыть стартовую страницу приложения")
     public LoginPage openPage(String loginUrl) {
-        log.debug("Тест " + context.getAttribute("testName") + ": открыть страницу логина " + BASE_URL + "/index.php?/auth/login/");
+        log.debug("Тест " + context.getAttribute("testName") + ": открыть страницу логина " + BASE_URL + loginUrl);
         open(BASE_URL + loginUrl);
         return this; //возвращаем текущую страницу
     }
 
     //В соответствии с паттерном "Page Element/Wrappers" создаются элементы Input
     @Step("Заполнить поле ввода")
-    public LoginPage writeInput(String inputLabel, String value) {
-        log.debug("Тест " + context.getAttribute("testName") + ": заполнить поле ввода '" + inputLabel + "'");
+    public LoginPage writeToInput(String inputLabel, String value) {
+        log.debug("Тест " + context.getAttribute("testName") + ": заполнить поле ввода '" + inputLabel + "' значением " + value);
         new Input(inputLabel).write(value); //вводим в поле ввода значение (логин или пароль)
         return this; //возвращаем текущую страницу
     }
@@ -43,7 +43,7 @@ public class LoginPage extends BasePage {
     @Step("Нажать кнопку 'Log In' для входа в приложение")
     public MenuPage clickButton(String buttonName) {
         log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку '" + buttonName + "' для входа в приложение");
-        new Button(buttonName).click(buttonName);
+        new Button(buttonName, buttonName).click(buttonName);
         return new MenuPage(context); //Инициализуем страницу, с которой дальше будем работать
     }
 }
