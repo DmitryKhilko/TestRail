@@ -8,5 +8,6 @@ import lombok.Data;
 public class ProjectGetAllPositiveResponse {
     Integer limit;
     String size;
+    GetAllProjects projects;
 }
 
