@@ -4,9 +4,9 @@ import adapters.ProjectAdapter;
 import lombok.extern.log4j.Log4j2;
 import models.Project;
 import org.testng.annotations.Test;
-import response.ProjectGetAllPositiveResponse;
-import response.ProjectGetPositiveResponse;
-import response.ProjectPostPositiveResponse;
+import models.response.ProjectGetAllPositiveResponse;
+import models.response.ProjectGetPositiveResponse;
+import models.response.ProjectPostPositiveResponse;
 
 import static org.testng.Assert.assertEquals;
 

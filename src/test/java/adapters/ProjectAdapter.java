@@ -1,9 +1,9 @@
 package adapters;
 
 import models.Project;
-import response.ProjectGetAllPositiveResponse;
-import response.ProjectGetPositiveResponse;
-import response.ProjectPostPositiveResponse;
+import models.response.ProjectGetAllPositiveResponse;
+import models.response.ProjectGetPositiveResponse;
+import models.response.ProjectPostPositiveResponse;
 
 public class ProjectAdapter extends BaseAdapter {
 
