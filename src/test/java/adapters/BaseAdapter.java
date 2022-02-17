@@ -24,4 +24,38 @@ public class BaseAdapter {
                         .statusCode(expectedStatusCode)
                         .extract().body().asString();
     }
+
+    //Шаблон GET-запроса для возврата всех Project или по конкретному коду в TestRail, так как GET-запросы нимеют одинаковую структуру
+    public String getProject(int expectedStatusCode, String url){
+        return
+                given()
+                        .log().all()
+                        .header("Authorization", "Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz")
+                        .header("NewToken", "czwdaFxSSHQwLvB6V6ei-phMdiar/73BUHkerBpth")
+                        .header("Content-Type", "application/json")
+                        .header("Accept" , "application/json")
+                .when()
+                        .get(BASE_URL +"/api/v2/get_project/" + url)
+                .then()
+                        .log().all()
+                        .statusCode(expectedStatusCode)
+                        .extract().body().asString();
+    }
+
+    public String getProjectAll(int expectedStatusCode){
+        return
+                given()
+                        .log().all()
+                        .header("Authorization", "Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz")
+                        .header("NewToken", "czwdaFxSSHQwLvB6V6ei-phMdiar/73BUHkerBpth")
+                        .header("Content-Type", "application/json")
+                        .header("Accept" , "application/json")
+                        .when()
+                        .get(BASE_URL +"/api/v2/get_project")
+                        .then()
+                        .log().all()
+                        .statusCode(expectedStatusCode)
+                        .extract().body().asString();
+    }
+
 }
