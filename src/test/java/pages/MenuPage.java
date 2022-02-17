@@ -16,7 +16,7 @@ public class MenuPage extends BasePage {
     @Step("Выбрать пункт меню")
     public MenuPage selectMenuItem(String menuItemName) {
         log.debug("Тест " + context.getAttribute("testName") + ": выбрать пункт меню '" + menuItemName + "'");
-        new MenuItem(menuItemName).select();
+        new MenuItem(menuItemName, menuItemName).select();
         return this;
     }
 }

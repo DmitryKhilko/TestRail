@@ -15,8 +15,8 @@ public class TestCaseTest extends BaseTest {
         //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage
                 .openPage("/index.php?/auth/login/")
-                .writeInput("Email","hdn_tms@mail.ru")
-                .writeInput("Password","pVui0CaU1AsUDIXrPMws")
+                .writeToInput("Email","hdn_tms@mail.ru")
+                .writeToInput("Password","pVui0CaU1AsUDIXrPMws")
                 .clickCheckboks("Keep me logged in")
                 .clickButton("Log In");
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
@@ -26,8 +26,8 @@ public class TestCaseTest extends BaseTest {
     public void deleteTestCase() {
         loginPage
                 .openPage("/index.php?/auth/login/")
-                .writeInput("Email","hdn_tms@mail.ru")
-                .writeInput("Password","pVui0CaU1AsUDIXrPMws")
+                .writeToInput("Email","hdn_tms@mail.ru")
+                .writeToInput("Password","pVui0CaU1AsUDIXrPMws")
                 .clickCheckboks("Keep me logged in")
                 .clickButton("Log In")
                 .selectMenuItem("Dima Hilko")

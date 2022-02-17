@@ -1,10 +1,12 @@
 package adapters;
 
 import models.Project;
+import response.ProjectPositiveResponse;
 
 public class ProjectAdapter extends BaseAdapter {
 
-    public String post(Project project, int statusCode, String apiAction, String idProject){
-        return super.post(gson.toJson(project, Project.class), statusCode, apiAction, idProject);
+    public ProjectPositiveResponse postProject(Project requestBody, int expectedStatusCode, String apiAction, String idProject){
+        String response = postProject(gson.toJson(requestBody, Project.class), expectedStatusCode, apiAction, idProject);
+        return gson.fromJson(response, ProjectPositiveResponse.class);
     }
 }

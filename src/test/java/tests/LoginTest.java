@@ -24,8 +24,8 @@ public class LoginTest extends BaseTest {
         //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage
                 .openPage("/auth/login/")
-                .writeInput("Email","hdn_tms@mail.ru")
-                .writeInput("Password","pVui0CaU1AsUDIXrPMws")
+                .writeToInput("Email","hdn_tms@mail.ru")
+                .writeToInput("Password","pVui0CaU1AsUDIXrPMws")
                 .clickCheckboks("Keep me logged in")
                 .clickButton("Log In");
         log.debug("Тест " + context.getAttribute("testName") + ": проверить, вошли ли в приложение - в меню должен отображаться текущий пользователь");
@@ -37,8 +37,8 @@ public class LoginTest extends BaseTest {
     public void logOut(ITestContext context) {
         loginPage
                 .openPage("/auth/login/")
-                .writeInput("Email","hdn_tms@mail.ru")
-                .writeInput("Password","pVui0CaU1AsUDIXrPMws")
+                .writeToInput("Email","hdn_tms@mail.ru")
+                .writeToInput("Password","pVui0CaU1AsUDIXrPMws")
                 .clickCheckboks("Keep me logged in")
                 .clickButton("Log In")
                 .selectMenuItem("Dima Hilko")

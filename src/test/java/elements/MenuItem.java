@@ -10,9 +10,10 @@ public class MenuItem {
     String menuItemName1; //переменная часть локатора (%s) - название пункта меню
     String menuItemName2; //переменная часть локатора (%s) - название пункта меню
 
-    public MenuItem(String label) {
-        this.menuItemName1 = label;
-        this.menuItemName2 = label;
+    //Конструктор
+    public MenuItem(String menuItemName1, String menuItemName2) {
+        this.menuItemName1 = menuItemName1;
+        this.menuItemName2 = menuItemName2;
     }
 
     //Создаем метод выбора пункта меню

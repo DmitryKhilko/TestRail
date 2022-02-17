@@ -8,7 +8,7 @@ import static pages.BasePage.BASE_URL;
 public class BaseAdapter {
     Gson gson = new Gson(); //вынесли в BaseAdapter, так как данная библиотека будет использоваться во множестве адаптеров, например, ProjectAdapter. То есть, все адаптеры, которые наследуются от текущего класса, смогут использовать данную библиотеку
     //Шаблон POST-запроса для работы с Project в TestRail, так как POST-запросы на создание, изменение, удаление имеют одинаковую структуру
-    public String post(String body, int statusCode, String apiAction, String idProject){
+    public String postProject(String body, int expectedStatusCode, String apiAction, String idProject){
         return
                 given()
                         .log().all()
@@ -21,7 +21,7 @@ public class BaseAdapter {
                         .post(BASE_URL +"/api/v2/" + apiAction + "_project/" + idProject)
                 .then()
                         .log().all()
-                        .statusCode(statusCode)
+                        .statusCode(expectedStatusCode)
                         .extract().body().asString();
     }
 }
