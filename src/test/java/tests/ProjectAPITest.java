@@ -54,6 +54,9 @@ public class ProjectAPITest {
                 .suite_mode(actual.getSuite_mode())
                 .build();
 
+        log.info("expected :" + expected.toString());
+        log.info("actual :" + actual.toString());
+
         assertEquals(actual,expected);
     }
 }
