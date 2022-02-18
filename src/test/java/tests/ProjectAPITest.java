@@ -1,34 +1,51 @@
 package tests;
 
 import adapters.ProjectAdapter;
-import io.qameta.allure.Description;
 import lombok.extern.log4j.Log4j2;
 import models.Project;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Test;
 import models.response.ProjectGetAllPositiveResponse;
-import models.response.ProjectGetPositiveResponse;
 import models.response.ProjectPostPositiveResponse;
+import models.response.ProjectResponse;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import java.util.ArrayList;
 
 import static org.testng.Assert.assertEquals;
 
 @Log4j2
 public class ProjectAPITest {
+    //План проверки API:
+    //
+    // Нужно подключить фейкер
+    //
+    //1. Создаем 3 проекта (через @DataProvider(name = "addProjectData") (id проектов заносим в List) https://vertex-academy.com/tutorials/ru/list-java-primer/
+    //2. Делаем просмотр 2-го проекта по id (из List)
+    //3. Делаем изменение 2-го проекта
+    //4. Делаем просмотр всех проектов, находим по id тот проект, который изменился и анализируем, правильно ли он изменился (делаем перебор в объекте List<> в ProjectGetAllPositiveResponse)
+    //5. Удаляем все проекты
+ 
 
-    public static String idProject;
+    public static Integer idWorkProject; //инициализируем переменную, в которую будем передавать id проекта, с которым будем производить иные операции (обновление, удаление)
+    public static String nameWorkProject;
+    public static String announcementWorkProject;
+    public static Boolean show_announcementWorkProject;
+    public static Integer suite_modeWorkProject;
+    public static Integer orderNumberWorkProject; //какой проект будет подвергаться изменениям и просмотру (0,1,2)
 
     @DataProvider(name = "addProjectData")
     public Object[][] addProjectData(){
         return new Object[][] {
-                {"Проверка работы создания проекта", "Описание проекта: создание", true, 1}
+                {"Проект 1", "Описание проекта: создание 1", true, 1},
+                {"Проект 2", "Описание проекта: создание 2", true, 1},
+                {"Проект 3", "Описание проекта: создание 3", true, 1}
         };
     }
 
     @DataProvider(name = "updateProjectData")
     public Object[][] updateProjectData(){
         return new Object[][] {
-                {"Проверка работы создания проекта_обновлено", "Описание проекта: обновление", false, 3}
+                {"Проект 2_обновлено", "Описание проекта: обновление", false}
         };
     }
 
@@ -52,70 +69,101 @@ public class ProjectAPITest {
                 .build();
         log.info("expected :" + expected.toString());
 
-        idProject = Integer.toString(actual.getId()); //выявляем id созданного проекта. Так как тип поля id - "Integer", а в другие тесты необходимо код проекта подставлять как строку, преобразуем код проекта в String
+        //Запоминаем фактические значения полей проекта для последующего его поиска, редактирования
+        if (expected.getName().equals("Проект 2")) {
+            idWorkProject = actual.getId();
+            nameWorkProject = expected.getName();
+            announcementWorkProject = expected.getAnnouncement();
+            show_announcementWorkProject = expected.getShow_announcement();
+            suite_modeWorkProject = expected.getSuite_mode();
+            orderNumberWorkProject = 1;
+        }
 
         assertEquals(actual,expected);
     }
-    @Test (priority = 2, dataProvider = "updateProjectData")
-    public void updateProject(String name, String announcement, Boolean show_announcement, Integer suite_mode){
+
+    @Test (priority = 2)
+    public void getOneProject(){
+        ProjectResponse actual = new ProjectAdapter().getOneProject(200, Integer.toString(idWorkProject));
+        log.info("actual :" + actual.toString());
+        ProjectResponse expected = ProjectResponse.builder()
+                .id(idWorkProject)
+                .name(nameWorkProject)
+                .announcement(announcementWorkProject)
+                .show_announcement(show_announcementWorkProject)
+                .suite_mode(suite_modeWorkProject)
+                .build();
+        log.info("expected :" + expected.toString());
+
+        assertEquals(actual,expected);
+    }
+
+
+    @Test (priority = 3, dataProvider = "updateProjectData")
+    public void updateProject(String name, String announcement, Boolean show_announcement){
 
         Project project = Project.builder()
                 .name(name) //здесь и ниже подставлены значения, определенные в аннотации @DataProvider(name = "updateProjectData")
                 .announcement(announcement)
                 .show_announcement(show_announcement)
-                .suite_mode(suite_mode)
                 .build();
-        ProjectPostPositiveResponse actual = new ProjectAdapter().postUpdateProject(project,200, "update", idProject);
+        ProjectPostPositiveResponse actual = new ProjectAdapter().postUpdateProject(project,200, "update", Integer.toString(idWorkProject));
         log.info("actual :" + actual.toString());
 
         ProjectPostPositiveResponse expected = ProjectPostPositiveResponse.builder()
-                .id(actual.getId())
+                .id(idWorkProject)
                 .name(name)
                 .announcement(announcement)
                 .show_announcement(show_announcement)
-                .suite_mode(suite_mode)
+                .suite_mode(suite_modeWorkProject)
                 .build();
         log.info("expected :" + expected.toString());
+
+        //Запоминаем фактические значения полей проекта для последующего его поиска
+        idWorkProject = actual.getId();
+        nameWorkProject = expected.getName();
+        announcementWorkProject = expected.getAnnouncement();
+        show_announcementWorkProject = expected.getShow_announcement();
+        suite_modeWorkProject = expected.getSuite_mode();
 
         assertEquals(actual,expected);
     }
 
-    @Ignore
-    @Test
-    public void deleteProject(){
-        ProjectPostPositiveResponse actual = new ProjectAdapter().postOneProjectDelete(200,"51");
-        //log.info(actual);
-    }
-
-    @Ignore
-    @Test
+    @Test (priority = 4)
     public void getAllProject(){
         ProjectGetAllPositiveResponse actual = new ProjectAdapter().getAllProject(200);
-        log.info(actual);
+        log.info(actual.getProjects());
+
+        assertEquals(new ArrayList<>(actual.getProjects()).get(orderNumberWorkProject).getId(),idWorkProject);
+        assertEquals(new ArrayList<>(actual.getProjects()).get(orderNumberWorkProject).getName(),nameWorkProject);
+        assertEquals(new ArrayList<>(actual.getProjects()).get(orderNumberWorkProject).getAnnouncement(),announcementWorkProject);
+        assertEquals(new ArrayList<>(actual.getProjects()).get(orderNumberWorkProject).getShow_announcement(),show_announcementWorkProject);
+        assertEquals(new ArrayList<>(actual.getProjects()).get(orderNumberWorkProject).getSuite_mode(),suite_modeWorkProject);
+        //assertEquals(actual.getProjects().stream().collect(Collectors.toList()).get(orderNumberWorkProject).getSuite_mode(),suite_modeWorkProject);
     }
 
-    @Description("Вернуть информацию о проекте 'Example Project' при его наличии в базе данных")
-    @Test
-    public void getOneProject(){
-        ProjectGetPositiveResponse actual = new ProjectAdapter().getOneProject(200, "49");
-        log.info("actual :" + actual.toString());
-        ProjectGetPositiveResponse expected = ProjectGetPositiveResponse.builder()
-                .id(49)
-                .name("Example Project_do not delete")
-                .announcement("Example announcement")
-                .show_announcement(true)
-                .suite_mode(1)
-                .is_completed(false)
-                .default_role_id(null)
-                .url("https://hdn.testrail.io/index.php?/projects/overview/49")
-                .build();
-        log.info("expected :" + expected.toString());
-
-        assertEquals(actual,expected);
+    //@Ignore
+    @Test (priority = 5)
+    public void deleteProject1(){
+        int actualCode = new ProjectAdapter().postOneProjectDelete(200,Integer.toString(idWorkProject-1));
+        log.info(actualCode);
     }
 
+    //@Ignore
+    @Test (priority = 5)
+    public void deleteProject2(){
+        int actualCode = new ProjectAdapter().postOneProjectDelete(200,Integer.toString(idWorkProject));
+        log.info(actualCode);
+    }
 
-//    @Test
+    //@Ignore
+    @Test (priority = 5)
+    public void deleteProject3(){
+        int actualCode = new ProjectAdapter().postOneProjectDelete(200,Integer.toString(idWorkProject+1));
+        log.info(actualCode);
+    }
+
+ //    @Test
 //    public void getProjectByRealNameAndNotEmptyTest() {
 //        log.info("Search project by correct code and name with cases, suites and other.");
 //        PositiveResponseStatus actual = new ProjectAdapter().getProjectWithCorrectCode(200, "DEMO");

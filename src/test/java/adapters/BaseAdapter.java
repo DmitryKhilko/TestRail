@@ -1,7 +1,6 @@
 package adapters;
 
 import com.google.gson.Gson;
-import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
 import static pages.BasePage.BASE_URL;
@@ -26,7 +25,7 @@ public class BaseAdapter {
                         .extract().body().asString();
     }
 
-    public ValidatableResponse postProjectDelete(Integer expectedStatusCode, String idProject){
+    public int postProjectDelete(Integer expectedStatusCode, String idProject){
         return
                 given()
                         .log().all()
@@ -38,7 +37,9 @@ public class BaseAdapter {
                         .post(BASE_URL +"/api/v2/delete_project/" + idProject)
                 .then()
                         //.log().all()
-                        .statusCode(expectedStatusCode);
+                        .statusCode(expectedStatusCode)
+                        .extract()
+                        .statusCode();
     }
 
     //Шаблон GET-запроса для возврата всех Project или по конкретному коду в TestRail, так как GET-запросы нимеют одинаковую структуру
@@ -67,7 +68,7 @@ public class BaseAdapter {
                         .header("Content-Type", "application/json")
                         .header("Accept" , "application/json")
                 .when()
-                        .get(BASE_URL +"/api/v2/get_project")
+                        .get(BASE_URL +"/api/v2/get_projects")
                 .then()
                         .log().all()
                         .statusCode(expectedStatusCode)

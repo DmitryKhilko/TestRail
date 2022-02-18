@@ -2,7 +2,7 @@ package adapters;
 
 import models.Project;
 import models.response.ProjectGetAllPositiveResponse;
-import models.response.ProjectGetPositiveResponse;
+import models.response.ProjectResponse;
 import models.response.ProjectPostPositiveResponse;
 
 public class ProjectAdapter extends BaseAdapter {
@@ -17,14 +17,13 @@ public class ProjectAdapter extends BaseAdapter {
         return gson.fromJson(response, ProjectPostPositiveResponse.class);
     }
 
-    public ProjectPostPositiveResponse postOneProjectDelete(Integer expectedStatusCode, String idProject){
-        String response = String.valueOf(super.postProjectDelete(expectedStatusCode, idProject));
-        return gson.fromJson(response, ProjectPostPositiveResponse.class);
+    public int postOneProjectDelete(Integer expectedStatusCode, String idProject){
+        return super.postProjectDelete(expectedStatusCode, idProject);
     }
 
-    public ProjectGetPositiveResponse getOneProject(Integer expectedStatusCode, String idProject){
+    public ProjectResponse getOneProject(Integer expectedStatusCode, String idProject){
         String response = super.getProject(expectedStatusCode, idProject);
-        return gson.fromJson(response, ProjectGetPositiveResponse.class);
+        return gson.fromJson(response, ProjectResponse.class);
     }
 
     public ProjectGetAllPositiveResponse getAllProject(Integer expectedStatusCode){
