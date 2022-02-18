@@ -1,29 +1,54 @@
 package adapters;
 
 import com.google.gson.Gson;
+import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 
 import static io.restassured.RestAssured.given;
 import static pages.BasePage.BASE_URL;
 
+@Log4j2
 public class BaseAdapter {
     Gson gson = new Gson(); //вынесли в BaseAdapter, так как данная библиотека будет использоваться во множестве адаптеров, например, ProjectAdapter. То есть, все адаптеры, которые наследуются от текущего класса, смогут использовать данную библиотеку
-    //Шаблон POST-запроса для работы с Project в TestRail, так как POST-запросы на создание, изменение, удаление имеют одинаковую структуру
-    public String postProject(String body, Integer expectedStatusCode, String apiAction, String idProject){
+
+    //Шаблон POST-запроса на создание и изменение объекта Project в TestRail (POST-запросы на создание, изменение имеют одинаковую структуру)
+    @Step("Проверка1")
+    public String postTemplateAddProject(String body, Integer expectedStatusCode){
         return
                 given()
                         //.log().all() //выводит всю информацию о запросе, в штатном режиме лучше закоментировать
-                        .header("Authorization", "Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz")
-                        .header("NewToken", "czwdaFxSSHQwLvB6V6ei-phMdiar/73BUHkerBpth")
-                        .header("Content-Type", "application/json")
-                        .header("Accept" , "application/json")
-                        .body(body)
-                .when()
-                        .post(BASE_URL +"/api/v2/" + apiAction + "_project/" + idProject)
+                        .header("Authorization", "Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz") //авторизация по логинуи паролю (этот код достал из Postman)
+                        //.header("NewToken", "czwdaFxSSHQwLvB6V6ei-phMdiar/73BUHkerBpth") //в TestRail досточно авторизации по логину и паролю, хотя возможен доступ и по токену
+                        .header("Content-Type", "application/json") //формат содержимого (отправка)
+                        .header("Accept" , "application/json") //формат приема
+                        .body(body) //тело запроса: перечисление отправляемых параметров и их значений
+                .when() //собственно сам запрос на создание(изменение) проекта
+                        .post(BASE_URL +"/api/v2/add_project")
                 .then()
                         //.log().all() //выводит всю информацию об ответе, в штатном режиме лучше закоментировать
-                        .statusCode(expectedStatusCode)
-                        .extract().body().asString();
+                        .statusCode(expectedStatusCode) //возвращает код ответа сервера
+                        .extract().body().asString(); //возвращает тело ответа, если оно предусмотренно программистами
     }
+
+    //Шаблон POST-запроса на создание и изменение объекта Project в TestRail (POST-запросы на создание, изменение имеют одинаковую структуру)
+    @Step("Проверка1")
+    public String postTemplateUpdateProject(String body, Integer expectedStatusCode, String idProject){
+        return
+                given()
+                        //.log().all() //выводит всю информацию о запросе, в штатном режиме лучше закоментировать
+                        .header("Authorization", "Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz") //авторизация по логинуи паролю (этот код достал из Postman)
+                        //.header("NewToken", "czwdaFxSSHQwLvB6V6ei-phMdiar/73BUHkerBpth") //в TestRail досточно авторизации по логину и паролю, хотя возможен доступ и по токену
+                        .header("Content-Type", "application/json") //формат содержимого (отправка)
+                        .header("Accept" , "application/json") //формат приема
+                        .body(body) //тело запроса: перечисление отправляемых параметров и их значений
+                        .when() //собственно сам запрос на создание(изменение) проекта
+                        .post(BASE_URL +"/api/v2/update_project/" + idProject)
+                        .then()
+                        //.log().all() //выводит всю информацию об ответе, в штатном режиме лучше закоментировать
+                        .statusCode(expectedStatusCode) //возвращает код ответа сервера
+                        .extract().body().asString(); //возвращает тело ответа, если оно предусмотренно программистами
+    }
+
 
     public int postProjectDelete(Integer expectedStatusCode, String idProject){
         return

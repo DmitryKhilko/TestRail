@@ -7,9 +7,9 @@ import java.util.List;
 
 @Data
 @Builder
-public class ProjectGetAllPositiveResponse {
+public class ProjectAllPositiveResponse {
     Integer limit;
     String size;
-    List<ProjectResponse> projects;
+    List<ProjectPositiveResponse> projects;
 }
 

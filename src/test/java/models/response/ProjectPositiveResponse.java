@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ProjectResponse {
+public class ProjectPositiveResponse {
     Integer id;
     String name;
     String announcement;
