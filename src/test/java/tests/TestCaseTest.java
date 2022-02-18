@@ -6,7 +6,8 @@ import tests.base.BaseTest;
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static pages.BasePage.*;
+import static pages.BasePage.LOGINPAGE_BUTTON;
+import static pages.BasePage.TOPMENU_ITEM_USERNAME;
 
 public class TestCaseTest extends BaseTest {
 
@@ -14,7 +15,7 @@ public class TestCaseTest extends BaseTest {
     public void createTestCase() {
         //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage
-                .openPage("/index.php?/auth/login/")
+                .openPage("/auth/login/")
                 .writeToInput("Email","hdn_tms@mail.ru")
                 .writeToInput("Password","pVui0CaU1AsUDIXrPMws")
                 .clickCheckboks("Keep me logged in")
@@ -25,7 +26,7 @@ public class TestCaseTest extends BaseTest {
     @Test (description = "Удалить тест-кейс")
     public void deleteTestCase() {
         loginPage
-                .openPage("/index.php?/auth/login/")
+                .openPage("/auth/login/")
                 .writeToInput("Email","hdn_tms@mail.ru")
                 .writeToInput("Password","pVui0CaU1AsUDIXrPMws")
                 .clickCheckboks("Keep me logged in")

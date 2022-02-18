@@ -58,6 +58,6 @@ public abstract class BaseTest {
     @AfterMethod(alwaysRun = true, description = "Закрыть браузер") //Постусловие
     public void tearDown(ITestResult result) {
         getWebDriver().quit(); //явным образом после каждого теста, расположенного в классе, закрываем браузер, так как по умолчанию в Selenide браузер закрывается по завершению всех методов класса
-        log.info("Тест " + result.getMethod().getMethodName() + ": завершение"); //команда лога, куда передается имя выполняемого теста
+        log.info("Тест " + result.getMethod().getMethodName() + ": финиш"); //команда лога, куда передается имя выполняемого теста
     }
 }

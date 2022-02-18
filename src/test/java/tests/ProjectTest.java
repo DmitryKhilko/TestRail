@@ -14,19 +14,18 @@ public class ProjectTest extends BaseTest {
     public void createProject() {
         //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage
-                .openPage("/index.php?/auth/login/")
+                .openPage("/auth/login/")
                 .writeToInput("Email","hdn_tms@mail.ru")
                 .writeToInput("Password","pVui0CaU1AsUDIXrPMws")
                 .clickCheckboks("Keep me logged in")
                 .clickButton("Log In");
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
-
     }
 
     @Test (description = "Удалить проект")
     public void deleteProject() {
         loginPage
-                .openPage("/index.php?/auth/login/")
+                .openPage("/auth/login/")
                 .writeToInput("Email","hdn_tms@mail.ru")
                 .writeToInput("Password","pVui0CaU1AsUDIXrPMws")
                 .clickCheckboks("Keep me logged in")

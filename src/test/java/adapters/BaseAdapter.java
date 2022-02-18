@@ -11,7 +11,7 @@ public class BaseAdapter {
     public String postProject(String body, Integer expectedStatusCode, String apiAction, String idProject){
         return
                 given()
-                        .log().all()
+                        //.log().all() //выводит всю информацию о запросе, в штатном режиме лучше закоментировать
                         .header("Authorization", "Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz")
                         .header("NewToken", "czwdaFxSSHQwLvB6V6ei-phMdiar/73BUHkerBpth")
                         .header("Content-Type", "application/json")
@@ -20,7 +20,7 @@ public class BaseAdapter {
                 .when()
                         .post(BASE_URL +"/api/v2/" + apiAction + "_project/" + idProject)
                 .then()
-                        .log().all()
+                        //.log().all() //выводит всю информацию об ответе, в штатном режиме лучше закоментировать
                         .statusCode(expectedStatusCode)
                         .extract().body().asString();
     }
@@ -28,7 +28,7 @@ public class BaseAdapter {
     public int postProjectDelete(Integer expectedStatusCode, String idProject){
         return
                 given()
-                        .log().all()
+                        //.log().all()
                         .header("Authorization", "Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz")
                         .header("NewToken", "czwdaFxSSHQwLvB6V6ei-phMdiar/73BUHkerBpth")
                         .header("Content-Type", "application/json")
@@ -46,7 +46,7 @@ public class BaseAdapter {
     public String getProject(Integer expectedStatusCode, String url){
         return
                 given()
-                        .log().all()
+                        //.log().all()
                         .header("Authorization", "Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz")
                         .header("NewToken", "czwdaFxSSHQwLvB6V6ei-phMdiar/73BUHkerBpth")
                         .header("Content-Type", "application/json")
@@ -54,7 +54,7 @@ public class BaseAdapter {
                 .when()
                         .get(BASE_URL +"/api/v2/get_project/" + url)
                 .then()
-                        .log().all()
+                        //.log().all()
                         .statusCode(expectedStatusCode)
                         .extract().body().asString();
     }
@@ -62,7 +62,7 @@ public class BaseAdapter {
     public String getProjectAll(Integer expectedStatusCode){
         return
                 given()
-                        .log().all()
+                        //.log().all()
                         .header("Authorization", "Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz")
                         .header("NewToken", "czwdaFxSSHQwLvB6V6ei-phMdiar/73BUHkerBpth")
                         .header("Content-Type", "application/json")
@@ -70,9 +70,8 @@ public class BaseAdapter {
                 .when()
                         .get(BASE_URL +"/api/v2/get_projects")
                 .then()
-                        .log().all()
+                        //.log().all()
                         .statusCode(expectedStatusCode)
                         .extract().body().asString();
     }
-
 }
