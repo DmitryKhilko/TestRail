@@ -1,62 +1,235 @@
 package tests;
 
 import adapters.ProjectAdapter;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import models.Project;
+import models.response.ProjectAllPositiveResponse;
+import models.response.ProjectPositiveResponse;
+import org.testng.ITestContext;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import response.ProjectPositiveResponse;
+import tests.base.BaseAPITest;
+
+import java.util.ArrayList;
 
 import static org.testng.Assert.assertEquals;
 
 @Log4j2
-public class ProjectAPITest {
+public class ProjectAPITest extends BaseAPITest {
 
-    public static String idProject;
+    /*План CRUD API-тестов для объекта Projects TesRail:
+    1. addProject(): создаем 3 проекта через @DataProvider(name = "addProjectData"), проверяем, что они созданы
+    2. getOneProject(): получаем данные о 2-м проекте по id, проверяем, что полученные данные соответствуют данным, на основе которых создан проект (пункт 1)
+    3. updateProject(): вносим изменения во 2-й проект, данные об изменениях получаем с помощью @DataProvider(name = "updateProjectData"), проверяем, что изменения сохранены
+    4. getAllProject(): получаем данные обо всех созданных проектах, в них находим 2-й проект и проверяем, что изменения сохранены
+    5. deleteProject(): удаляем созданные проекты
+    Примечание: тесты зависимы, из одного теста в последующих передаются данные о проекте
+    */
 
-    @Test (priority = 1)
-    public void addProject(){
+    //Объявляем переменные, в которые будут заносится значения полей 2-го проекта после его создания и после изменения
+    public static Integer idWorkProject;
+    public static String nameWorkProject;
+    public static String announcementWorkProject;
+    public static Boolean show_announcementWorkProject;
+    public static Integer suite_modeWorkProject;
+    public static Integer orderNumberWorkProject; //номер по порядку в List 2-го проекта
+
+    //Данные для создания трех проектов
+    @DataProvider(name = "addProjectData")
+    public Object[][] addProjectData() {
+        return new Object[][]{
+                {"Проект 1", "Описание проекта: создание 1", true, 1},
+                {"Проект 2", "Описание проекта: создание 2", true, 1},
+                {"Проект 3", "Описание проекта: создание 3", true, 1}
+        };
+    }
+
+    //Данные для изменения 2-го проекта
+    @DataProvider(name = "updateProjectData")
+    public Object[][] updateProjectData() {
+        return new Object[][]{
+                {"Проект 2_обновлено", "Описание проекта: обновление", false}
+        };
+    }
+
+    @Step("Проверка 3")
+    @Description("Производится создание проекта на основе передаеваемых данных из @DataProvider и провекра создания данного проекта")
+    @Test(description = "API-тест: создание проекта", priority = 1, dataProvider = "addProjectData")
+    public void addAPIProject(ITestContext context, String name, String announcement, Boolean show_announcement, Integer suite_mode) {
+        log.debug("Тест " + context.getAttribute("testName") + ": создать requestBody для передачи его в POST-запрос");
         Project requestBody = Project.builder()
-                .name("Проверка работы создания проекта")
-                .announcement("Описание проекта: создание")
-                .show_announcement(true)
-                .suite_mode(1)
+                .name(name) //здесь и ниже подставлены значения, определенные в аннотации @DataProvider(name = "addProjectData")
+                .announcement(announcement)
+                .show_announcement(show_announcement)
+                .suite_mode(suite_mode)
                 .build();
-        ProjectPositiveResponse actual = new ProjectAdapter().postProject(requestBody,200, "add", "");
 
+        log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на создание проекта '" + name + "'");
+        ProjectPositiveResponse actual = new ProjectAdapter().postAddProject(requestBody, 200);
+        log.debug("Тест " + context.getAttribute("testName") + ": полученные актуальные (записанные в БД) данные о созданном проекте '" + name + "' :" + actual.toString());
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать объект с перечнем ожидаемых данных по проекту для последующей их сверки с актуальными данными");
         ProjectPositiveResponse expected = ProjectPositiveResponse.builder()
                 .id(actual.getId())
-                .name(actual.getName())
-                .announcement(actual.getAnnouncement())
-                .show_announcement(actual.getShow_announcement())
-                .suite_mode(actual.getSuite_mode())
+                .name(name)
+                .announcement(announcement)
+                .show_announcement(show_announcement)
+                .suite_mode(suite_mode)
                 .build();
+        log.debug("Тест " + context.getAttribute("testName") + ": ожидаемые данные для проекта '" + name + "' -" + expected.toString());
 
-        idProject = Integer.toString(actual.getId()); //выявляем id созданного проекта. Так как тип поля id - "Integer", а в другие тесты необходимо код проекта подставлять как строку, преобразуем код проекта в String
+        log.debug("Тест " + context.getAttribute("testName") + ": присвоить переменным ожидаемые значения полей проекта для последующих тестов по поиску, редактированию проекта");
+        if (expected.getName().equals("Проект 2")) {
+            idWorkProject = actual.getId();
+            nameWorkProject = expected.getName();
+            announcementWorkProject = expected.getAnnouncement();
+            show_announcementWorkProject = expected.getShow_announcement();
+            suite_modeWorkProject = expected.getSuite_mode();
+            orderNumberWorkProject = 1;
+        }
 
-        assertEquals(actual,expected);
+        log.debug("Тест " + context.getAttribute("testName") + ": сравнить актуальные (записанные в БД) значения полей проекта с ожидаемыми значениями");
+        assertEquals(actual, expected);
     }
-    @Test (priority = 2)
-    public void updateProject(){
 
+    @Description("Производится получение данных о 2-м проекте по id и проверка того, что полученные данные соответствуют данным, на основе которых был создан проект")
+    @Test(description = "API-тест: получение данных об одном проекте", priority = 2)
+    public void getAPIOneProject(ITestContext context) {
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер GET-запрос на получение данных о проекте с id " + idWorkProject);
+        ProjectPositiveResponse actual = new ProjectAdapter().getOneProject(200, Integer.toString(idWorkProject));
+        log.debug("Тест " + context.getAttribute("testName") + ": полученные актуальные (записанные в БД) данные о проекте с id " + idWorkProject + " -" + actual.toString());
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать объект с перечнем ожидаемых данных по проекту для последующей их сверки с актуальными данными");
+        ProjectPositiveResponse expected = ProjectPositiveResponse.builder()
+                .id(idWorkProject)
+                .name(nameWorkProject)
+                .announcement(announcementWorkProject)
+                .show_announcement(show_announcementWorkProject)
+                .suite_mode(suite_modeWorkProject)
+                .build();
+        log.debug("Тест " + context.getAttribute("testName") + ": ожидаемые данные для проекта c id " + idWorkProject + " -" + expected.toString());
+
+        log.debug("Тест " + context.getAttribute("testName") + ": сравнить актуальные (записанные в БД) значения полей проекта с ожидаемыми значениями");
+        assertEquals(actual, expected);
+    }
+
+    @Description("Производится внесение изменений во 2-й проект на основе передаеваемых данных из @DataProvider и провекра сохранения изменений проекта")
+    @Test(description = "API-тест: изменение проекта", priority = 3, dataProvider = "updateProjectData")
+    public void updateAPIProject(ITestContext context, String name, String announcement, Boolean show_announcement) {
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать объект с перечнем данных для последующего изменения проекта c id " + idWorkProject);
         Project project = Project.builder()
-                .name("Проверка работы создания проекта_")
-                .announcement("Описание проекта: создание_")
-                .show_announcement(false)
-                .suite_mode(2)
+                .name(name) //здесь и ниже подставлены значения, определенные в аннотации @DataProvider(name = "updateProjectData")
+                .announcement(announcement)
+                .show_announcement(show_announcement)
                 .build();
-        ProjectPositiveResponse actual = new ProjectAdapter().postProject(project,200, "update", idProject);
 
+        log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на изменение данных проекте с id " + idWorkProject);
+        ProjectPositiveResponse actual = new ProjectAdapter().postUpdateProject(project, 200, Integer.toString(idWorkProject));
+        log.debug("Тест " + context.getAttribute("testName") + ": полученные актуальные (записанные в БД) данные об измененном проекте с id " + idWorkProject + " - " + actual.toString());
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать объект с перечнем ожидаемых данных по проекту для последующей их сверки с актуальными данными");
         ProjectPositiveResponse expected = ProjectPositiveResponse.builder()
-                .id(actual.getId())
-                .name(actual.getName())
-                .announcement(actual.getAnnouncement())
-                .show_announcement(actual.getShow_announcement())
-                .suite_mode(actual.getSuite_mode())
+                .id(idWorkProject)
+                .name(name)
+                .announcement(announcement)
+                .show_announcement(show_announcement)
+                .suite_mode(suite_modeWorkProject)
                 .build();
+        log.debug("Тест " + context.getAttribute("testName") + ": ожидаемые данные для проекта '" + name + "' -" + expected.toString());
 
-        log.info("expected :" + expected.toString());
-        log.info("actual :" + actual.toString());
+        log.debug("Тест " + context.getAttribute("testName") + ": присвоить переменным ожидаемые значения полей проекта для последующего его поиска и проверки правильности внесения изменений");
+        idWorkProject = actual.getId();
+        nameWorkProject = expected.getName();
+        announcementWorkProject = expected.getAnnouncement();
+        show_announcementWorkProject = expected.getShow_announcement();
+        suite_modeWorkProject = expected.getSuite_mode();
 
-        assertEquals(actual,expected);
+        log.debug("Тест " + context.getAttribute("testName") + ": сравнить актуальные (записанные в БД) значения полей проекта с ожидаемыми значениями");
+        assertEquals(actual, expected);
     }
+
+    @Description("Производится получение данных обо всех созданных проектах, поиск в них 2-го проекта и проверка того, что изменения в проекте сохранены")
+    @Test(description = "API-тест: получение данных обо всех проектах", priority = 4)
+    public void getAPIAllProject(ITestContext context) {
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер GET-запрос на получение данных обо всех созданных проектах");
+        ProjectAllPositiveResponse actual = new ProjectAdapter().getAllProject(200);
+        log.debug("Тест " + context.getAttribute("testName") + ": полученные актуальные (записанные в БД) данные обо всех созданных проектах -" + actual.getProjects());
+        log.info(actual.getProjects());
+
+        //Сравнение данных 2-го проекта, полученных из БД с ожидаемыми значениями (данными об изменении проекта с предыдущего теста)
+        log.debug("Тест " + context.getAttribute("testName") + "сравнить актуальные (записанные в БД) данные полей 2-го проекта с ожидаемыми значениями (данными об изменении проекта с предыдущего теста)");
+        assertEquals(new ArrayList<>(actual.getProjects()).get(orderNumberWorkProject).getId(), idWorkProject);
+        assertEquals(new ArrayList<>(actual.getProjects()).get(orderNumberWorkProject).getName(), nameWorkProject);
+        assertEquals(new ArrayList<>(actual.getProjects()).get(orderNumberWorkProject).getAnnouncement(), announcementWorkProject);
+        assertEquals(new ArrayList<>(actual.getProjects()).get(orderNumberWorkProject).getShow_announcement(), show_announcementWorkProject);
+        assertEquals(new ArrayList<>(actual.getProjects()).get(orderNumberWorkProject).getSuite_mode(), suite_modeWorkProject);
+        //assertEquals(actual.getProjects().stream().collect(Collectors.toList()).get(orderNumberWorkProject).getSuite_mode(),suite_modeWorkProject);
+    }
+
+    @Step("Проверка 3")
+    @Description("Производится удаление всех созданных проектов")
+    @Test(description = "API-тест: удаление созданных проектов", priority = 5)
+    public void deleteAPIProject(ITestContext context) {
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на удаление проекта с id " + (idWorkProject - 1));
+        int actualCode1 = new ProjectAdapter().postOneProjectDelete(200, Integer.toString(idWorkProject - 1));
+        log.debug("Тест " + context.getAttribute("testName") + ": полученный от сервера код ответа - " + actualCode1);
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на удаление проекта с id " + idWorkProject);
+        int actualCode2 = new ProjectAdapter().postOneProjectDelete(200, Integer.toString(idWorkProject));
+        log.debug("Тест " + context.getAttribute("testName") + ": полученный от сервера код ответа - " + actualCode2);
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на удаление проекта с id " + (idWorkProject + 1));
+        int actualCode3 = new ProjectAdapter().postOneProjectDelete(200, Integer.toString(idWorkProject + 1));
+        log.debug("Тест " + context.getAttribute("testName") + ": полученный от сервера код ответа - " + actualCode3);
+    }
+
+//    @Description("Производится удаление второго созданного проекта")
+//    @Test (description = "API-тест: удаление проекта", priority = 5)
+//    public void deleteProject2(ITestContext context){
+//        int actualCode = new ProjectAdapter().postOneProjectDelete(200,Integer.toString(idWorkProject));
+//        log.info(actualCode);
+//    }
+//
+//    @Description("Производится удаление третьего созданного проекта")
+//    @Test (description = "API-тест: удаление проекта", priority = 5)
+//    public void deleteProject3(ITestContext context){
+//        int actualCode = new ProjectAdapter().postOneProjectDelete(200,Integer.toString(idWorkProject+1));
+//        log.info(actualCode);
+//    }
+
+    //    @Test
+//    public void getProjectByRealNameAndNotEmptyTest() {
+//        log.info("Search project by correct code and name with cases, suites and other.");
+//        PositiveResponseStatus actual = new ProjectAdapter().getProjectWithCorrectCode(200, "DEMO");
+//        PositiveResponseStatus expected = PositiveResponseStatus.builder()
+//                .status(true)
+//                .result(Result.builder()
+//                        .title("Demo Project")
+//                        .code("DEMO")
+//                        .counts(Counts.builder()
+//                                .cases(10)
+//                                .suites(3)
+//                                .milestones(2)
+//                                .runs(Runs.builder()
+//                                        .total(0)
+//                                        .active(0)
+//                                        .build())
+//                                .defects(Defects.builder()
+//                                        .total(0)
+//                                        .open(0)
+//                                        .build())
+//                                .build())
+//                        .build())
+//                .build();
+//
+//        assertEquals(actual, expected);
+//    }
+
+
 }
