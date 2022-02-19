@@ -10,12 +10,14 @@
         <classes>
             <class name="tests.ProjectAPITest">
                 <methods>
+                    <include name="addAPIProjectNegativeEmptyName" />
+                    <include name="addAPIProjectNegativeNotCorrectSuiteMode" />
+                    <include name="deleteAPIProjectNegative" />
                     <include name="addAPIProject" />
                     <include name="getAPIOneProject" />
                     <include name="updateAPIProject" />
                     <include name="getAPIAllProject" />
                     <include name="deleteAPIProject" />
-                    <include name="deleteAPIProjectNegative" />
                 </methods>
             </class>
         </classes>

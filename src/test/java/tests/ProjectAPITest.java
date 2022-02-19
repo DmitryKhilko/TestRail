@@ -55,7 +55,7 @@ public class ProjectAPITest extends BaseAPITest {
         };
     }
 
-    @Step("Проверка 3")
+    @Step("Создать новый проект")
     @Description("Производится создание проекта на основе передаеваемых данных из @DataProvider и провекра создания данного проекта")
     @Test(description = "API-тест: создание проекта", priority = 1, dataProvider = "addProjectData")
     public void addAPIProject(ITestContext context, String name, String announcement, Boolean show_announcement, Integer suite_mode) {
@@ -95,6 +95,7 @@ public class ProjectAPITest extends BaseAPITest {
         assertEquals(actual, expected);
     }
 
+    @Step("Получить данные о проекта по его id")
     @Description("Производится получение данных о 2-м проекте по id и проверка того, что полученные данные соответствуют данным, на основе которых был создан проект")
     @Test(description = "API-тест: получение данных об одном проекте", priority = 2)
     public void getAPIOneProject(ITestContext context) {
@@ -117,6 +118,7 @@ public class ProjectAPITest extends BaseAPITest {
         assertEquals(actual, expected);
     }
 
+    @Step("Изменить проект")
     @Description("Производится внесение изменений во 2-й проект на основе передаеваемых данных из @DataProvider и провекра сохранения изменений проекта")
     @Test(description = "API-тест: изменение проекта", priority = 3, dataProvider = "updateProjectData")
     public void updateAPIProject(ITestContext context, String name, String announcement, Boolean show_announcement) {
@@ -153,6 +155,7 @@ public class ProjectAPITest extends BaseAPITest {
         assertEquals(actual, expected);
     }
 
+    @Step("Получить данные обо всех ранее созданных проектах")
     @Description("Производится получение данных обо всех созданных проектах, поиск в них 2-го проекта и проверка того, что изменения в проекте сохранены")
     @Test(description = "API-тест: получение данных обо всех проектах", priority = 4)
     public void getAPIAllProject(ITestContext context) {
@@ -172,7 +175,7 @@ public class ProjectAPITest extends BaseAPITest {
         //assertEquals(actual.getProjects().stream().collect(Collectors.toList()).get(orderNumberWorkProject).getSuite_mode(),suite_modeWorkProject);
     }
 
-    @Step("Проверка 3")
+    @Step("Удалить все ранее созданные проекты")
     @Description("Производится удаление всех созданных проектов")
     @Test(description = "API-тест: удаление созданных проектов", priority = 5)
     public void deleteAPIProject(ITestContext context) {
@@ -193,6 +196,57 @@ public class ProjectAPITest extends BaseAPITest {
         assertEquals(actualCode3, 200);
     }
 
+    @Step("Создать новый проект")
+    @Description("Производится попытка создания проекта с пустым названием. В результате сервер вернет Status Code 400 и JSON {\"error\": \"Field :name is a required field.\"}")
+    @Test(description = "API-тест: создание проекта с пустым названием")
+    public void addAPIProjectNegativeEmptyName(ITestContext context) {
+        log.debug("Тест " + context.getAttribute("testName") + ": создать requestBody для передачи его в POST-запрос");
+        Project requestBody = Project.builder()
+                .name("")
+                .announcement("Описание проекта")
+                .show_announcement(true)
+                .suite_mode(1)
+                .build();
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на создание проекта с пустым именем");
+        ProjectNegativeResponse actual = new ProjectAdapter().postAddProjectNegative(requestBody, 400);
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать объект с ожидаемым от сервера ответом");
+        ProjectNegativeResponse expected = ProjectNegativeResponse.builder()
+                .error("Field :name is a required field.")
+                .build();
+        log.debug("Тест " + context.getAttribute("testName") + ": ожидаемый от сервера ответ - " + expected.toString());
+
+        log.debug("Тест " + context.getAttribute("testName") + ": сравнить полученный от сервера ответ с ожидаемым ответом");
+        assertEquals(actual, expected);
+    }
+
+    @Step("Создать новый проект")
+    @Description("Производится попытка создания проекта с некорректным значением suite_mode (1,2,3 - корректные значения). В результате сервер вернет Status Code 400 и JSON {\"error\": \"Field :name is a required field.\"}")
+    @Test(description = "API-тест: создание проекта с некорректным значением suite_mode")
+    public void addAPIProjectNegativeNotCorrectSuiteMode(ITestContext context) {
+        log.debug("Тест " + context.getAttribute("testName") + ": создать requestBody для передачи его в POST-запрос");
+        Project requestBody = Project.builder()
+                .name("Проект")
+                .announcement("Описание проекта")
+                .show_announcement(true)
+                .suite_mode(5)
+                .build();
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на создание проекта с пустым именем");
+        ProjectNegativeResponse actual = new ProjectAdapter().postAddProjectNegative(requestBody, 400);
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать объект с ожидаемым от сервера ответом");
+        ProjectNegativeResponse expected = ProjectNegativeResponse.builder()
+                .error("Field :suite_mode is not a supported enum value (\"5\").")
+                .build();
+        log.debug("Тест " + context.getAttribute("testName") + ": ожидаемый от сервера ответ - " + expected.toString());
+
+        log.debug("Тест " + context.getAttribute("testName") + ": сравнить полученный от сервера ответ с ожидаемым ответом");
+        assertEquals(actual, expected);
+    }
+
+    @Step("Удалить проект")
     @Description("Производится попытка удаление проекта с кодом, которого нет в БД")
     @Test(description = "API-тест: удаление несуществующего проекта")
     public void deleteAPIProjectNegative(ITestContext context) {

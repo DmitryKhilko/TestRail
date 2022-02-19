@@ -11,8 +11,8 @@ import static pages.BasePage.BASE_URL;
 public class BaseAdapter {
     Gson gson = new Gson(); //вынесли в BaseAdapter, так как данная библиотека будет использоваться во множестве адаптеров, например, ProjectAdapter. То есть, все адаптеры, которые наследуются от текущего класса, смогут использовать данную библиотеку
 
-    //Шаблон POST-запроса на создание и изменение объекта Project в TestRail (POST-запросы на создание, изменение имеют одинаковую структуру)
-    @Step("Проверка1")
+    //Шаблон POST-запроса на создание объекта Project в TestRail
+    @Step("Сформировать POST запрос на создание проекта")
     public String postTemplateAddProject(String body, int expectedStatusCode){
         return
                 given()
@@ -30,8 +30,7 @@ public class BaseAdapter {
                         .extract().body().asString(); //возвращает тело ответа, если оно предусмотренно программистами
     }
 
-    //Шаблон POST-запроса на создание и изменение объекта Project в TestRail (POST-запросы на создание, изменение имеют одинаковую структуру)
-    @Step("Проверка1")
+    @Step("Сформировать POST запрос на изменение проекта")
     public String postTemplateUpdateProject(String body, int expectedStatusCode, String idProject){
         return
                 given()
@@ -49,7 +48,7 @@ public class BaseAdapter {
                         .extract().body().asString(); //возвращает тело ответа, если оно предусмотренно программистами
     }
 
-
+    @Step("Сформировать POST запрос на удаление проекта")
     public int postProjectDelete(int expectedStatusCode, String idProject){
         return
                 given()
@@ -66,6 +65,7 @@ public class BaseAdapter {
                         .extract().statusCode();
     }
 
+    @Step("Сформировать POST запрос на создание проекта с некорректным id")
     public String postProjectDeleteNegative(Integer expectedStatusCode, String idProject){
         return
                 given()
@@ -83,7 +83,8 @@ public class BaseAdapter {
     }
 
     //Шаблон GET-запроса для возврата всех Project или по конкретному коду в TestRail, так как GET-запросы нимеют одинаковую структуру
-    public String getProject(int expectedStatusCode, String url){
+    @Step("Сформировать GET запрос на получение данных о проекте по его id")
+    public String getProject(int expectedStatusCode, String idProject){
         return
                 given()
                         //.log().all()
@@ -92,13 +93,14 @@ public class BaseAdapter {
                         .header("Content-Type", "application/json")
                         .header("Accept" , "application/json")
                 .when()
-                        .get(BASE_URL +"/api/v2/get_project/" + url)
+                        .get(BASE_URL +"/api/v2/get_project/" + idProject)
                 .then()
                         //.log().all()
                         .statusCode(expectedStatusCode)
                         .extract().body().asString();
     }
 
+    @Step("Сформировать GET запрос на получение данных обо всех созданных проектах")
     public String getProjectAll(int expectedStatusCode){
         return
                 given()
