@@ -10,6 +10,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.DashbordPage;
 import pages.LoginPage;
+import utils.PropertyReader;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
@@ -19,6 +20,7 @@ public abstract class BaseTest {
     public LoginPage loginPage;
     //public MenuPage menuPage;
     public DashbordPage dashbordPage;
+    public String email, password, userName;
 
     @Parameters({"browser"}) //параметр из файла regression_multi_browser.xml (для запуска тестов в нескольких браузерах параллельно)
     @BeforeMethod (description = "Настроить и открыть браузер")//Предусловие
@@ -46,6 +48,10 @@ public abstract class BaseTest {
         Configuration.fastSetValue = true; //для ускорения заполнения полей ввода ($(PASSWORD_INPUT).setValue(password);). Если установлено значение true, значение устанавливается с помощью javascript вместо использования встроенной в Selenium функции «sendKey» (это довольно медленно, поскольку отправляет каждый символ отдельно). sendKeys() были вынуждены заменить на setValue(), так как Jenkins не мог прогнать тесты
         Configuration.savePageSource = false; //при падении теста не сохраняет Page source (file:/D:/Projects/TestRail/build/reports/tests/1644796597073.11.html)
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false)); //Для взаимодействия Selenide и Allure (https://ru.selenide.org/documentation/reports.html#allure-report)
+        email = System.getenv().getOrDefault("TESTRAIL_EMAIL", PropertyReader.getProperty("testrail.email")); //команда, берущая значение для переменной или с настроек CI (TESTRAIL_EMAIL) или из настройки testrail.email файла config.properties
+        password = System.getenv().getOrDefault("TESTRAIL_PASSWORD", PropertyReader.getProperty("testrail.password")); //команда, берущая значение для переменной или с настроек CI (TESTRAIL_PASSWORD) или из настройки testrail.password файла config.properties
+        userName = System.getenv().getOrDefault("TESTRAIL_USERNAME", PropertyReader.getProperty("testrail.username")); //команда, берущая значение для переменной или с настроек CI (TESTRAIL_USERNAME) или из настройки testrail.username файла config.properties
+
 
         context.setAttribute("testName", result.getMethod().getMethodName()); //передаем имя выполняемого теста в методы тестового фреймворка для наглядного формирования логов
 

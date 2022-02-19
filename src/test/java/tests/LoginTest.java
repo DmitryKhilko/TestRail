@@ -8,8 +8,6 @@ import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import tests.base.BaseTest;
 
-import java.time.Duration;
-
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -26,13 +24,12 @@ public class LoginTest extends BaseTest {
         //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage
                 .openPage("/auth/login/")
-                .writeToInput("Email","hdn_tms@mail.ru")
-                .writeToInput("Password","pVui0CaU1AsUDIXrPMws")
+                .writeToInput("Email",email) //email - переменная берущая значение из файла config.properties
+                .writeToInput("Password",password) //password - переменная берущая значение из файла config.properties
                 .clickCheckboks("Keep me logged in")
                 .clickButton("Log In");
-        log.debug("Тест " + context.getAttribute("testName") + ": проверить, вошли ли в приложение - в меню должен отображаться текущий пользователь");
-        $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
-        $(TOPMENU_ITEM_USERNAME).shouldNotBe().shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
+        log.debug("Тест " + context.getAttribute("testName") + ": проверить, вошли ли в приложение - в меню должен отображаться текущий пользователь - '"+ userName + "'");
+        $(TOPMENU_ITEM_USERNAME).shouldHave(exactText(userName)); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko" (переменная берущая значение из файла config.properties)
     }
 
     @Description("Проверить после выхода из приложение на странице логина наличие кнопки 'Log in'")
@@ -40,14 +37,13 @@ public class LoginTest extends BaseTest {
     public void logOut(ITestContext context) {
         loginPage
                 .openPage("/auth/login/")
-                .writeToInput("Email","hdn_tms@mail.ru")
-                .writeToInput("Password","pVui0CaU1AsUDIXrPMws")
+                .writeToInput("Email",email)
+                .writeToInput("Password",password)
                 .clickCheckboks("Keep me logged in")
                 .clickButton("Log In")
-                .selectMenuItem("Dima Hilko")
+                .selectMenuItem(userName)
                 .selectMenuItem("Logout");
         log.debug("Тест " + context.getAttribute("testName") + ": проверить, вышли ли из приложения - на странице должна отображаться кнопка 'Log in'");
         $(LOGINPAGE_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
-        $(LOGINPAGE_BUTTON).shouldNotBe(visible, Duration.ofSeconds(20)); //проверяем наличие кнопки "Log in" на открывшейся странице
     }
 }

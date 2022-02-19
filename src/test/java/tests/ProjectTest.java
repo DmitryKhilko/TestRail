@@ -15,22 +15,22 @@ public class ProjectTest extends BaseTest {
         //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage
                 .openPage("/auth/login/")
-                .writeToInput("Email","hdn_tms@mail.ru")
-                .writeToInput("Password","pVui0CaU1AsUDIXrPMws")
+                .writeToInput("Email",email)
+                .writeToInput("Password",password)
                 .clickCheckboks("Keep me logged in")
                 .clickButton("Log In");
-        $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
+        $(TOPMENU_ITEM_USERNAME).shouldHave(exactText(userName)); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
     }
 
     @Test (description = "Удалить проект")
     public void deleteProject() {
         loginPage
                 .openPage("/auth/login/")
-                .writeToInput("Email","hdn_tms@mail.ru")
-                .writeToInput("Password","pVui0CaU1AsUDIXrPMws")
+                .writeToInput("Email",email)
+                .writeToInput("Password",password)
                 .clickCheckboks("Keep me logged in")
                 .clickButton("Log In")
-                .selectMenuItem("Dima Hilko")
+                .selectMenuItem(userName)
                 .selectMenuItem("Logout");
         $(LOGINPAGE_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
     }
