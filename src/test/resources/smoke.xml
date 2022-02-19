@@ -1,44 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Smoke Tests" thread-count="3" parallel="tests" >
+<suite name="Suite">
 
-<!--    https://testng.org/doc/documentation-main.html#test-groups-->
-
-    <listeners>
-        <listener class-name="tests.base.AnnotationTransformer"/>
-    </listeners>
+<!--    <listeners>-->
+<!--        <listener class-name="tests.base.AnnotationTransformer"/>-->
+<!--    </listeners>-->
 
     <test name="Test1">
         <groups>
             <run>
                 <include name="smoke"/>
+<!--            <exclude name="broken"/>-->
             </run>
         </groups>
+
         <classes>
             <class name="tests.LoginTest"/>
         </classes>
-    </test>
-
-    <test name="Test2">
-        <groups>
-            <run>
-                <include name="smoke"/>
-            </run>
-        </groups>
-        <classes>
-            <class name="tests.ProjectTest"/>
-        </classes>
-    </test>
-
-    <test name="Test3">
-        <groups>
-            <run>
-                <include name="smoke"/>
-            </run>
-        </groups>
-        <classes>
-            <class name="tests.ProjectTest"/>
-        </classes>
-    </test>
-
-</suite>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->

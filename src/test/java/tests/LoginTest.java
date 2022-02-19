@@ -19,7 +19,7 @@ public class LoginTest extends BaseTest {
     @TmsLink("8537") //ссылка на тест-кейс в TMS
     @Issue("1988") //ссылка на баг-репорт
     @Description("Проверить после входа в приложение наличие пункта меню с именем текущего пользователя") //описание теста
-    @Test(description = "Войти в приложение (валидные логин и пароль)", groups = {"smoke"})//название теста, название группы
+    @Test(description = "Войти в приложение (валидные логин и пароль)", groups = { "smoke" })//название теста, название группы
     public void logInValidUsernameAndPassword(ITestContext context) {
         //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage

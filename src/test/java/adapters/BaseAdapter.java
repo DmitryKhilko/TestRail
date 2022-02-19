@@ -13,7 +13,7 @@ public class BaseAdapter {
 
     //Шаблон POST-запроса на создание и изменение объекта Project в TestRail (POST-запросы на создание, изменение имеют одинаковую структуру)
     @Step("Проверка1")
-    public String postTemplateAddProject(String body, Integer expectedStatusCode){
+    public String postTemplateAddProject(String body, int expectedStatusCode){
         return
                 given()
                         //.log().all() //выводит всю информацию о запросе, в штатном режиме лучше закоментировать
@@ -32,7 +32,7 @@ public class BaseAdapter {
 
     //Шаблон POST-запроса на создание и изменение объекта Project в TestRail (POST-запросы на создание, изменение имеют одинаковую структуру)
     @Step("Проверка1")
-    public String postTemplateUpdateProject(String body, Integer expectedStatusCode, String idProject){
+    public String postTemplateUpdateProject(String body, int expectedStatusCode, String idProject){
         return
                 given()
                         //.log().all() //выводит всю информацию о запросе, в штатном режиме лучше закоментировать
@@ -41,16 +41,16 @@ public class BaseAdapter {
                         .header("Content-Type", "application/json") //формат содержимого (отправка)
                         .header("Accept" , "application/json") //формат приема
                         .body(body) //тело запроса: перечисление отправляемых параметров и их значений
-                        .when() //собственно сам запрос на создание(изменение) проекта
+                .when() //собственно сам запрос на создание(изменение) проекта
                         .post(BASE_URL +"/api/v2/update_project/" + idProject)
-                        .then()
+                .then()
                         //.log().all() //выводит всю информацию об ответе, в штатном режиме лучше закоментировать
                         .statusCode(expectedStatusCode) //возвращает код ответа сервера
                         .extract().body().asString(); //возвращает тело ответа, если оно предусмотренно программистами
     }
 
 
-    public int postProjectDelete(Integer expectedStatusCode, String idProject){
+    public int postProjectDelete(int expectedStatusCode, String idProject){
         return
                 given()
                         //.log().all()
@@ -63,12 +63,27 @@ public class BaseAdapter {
                 .then()
                         //.log().all()
                         .statusCode(expectedStatusCode)
-                        .extract()
-                        .statusCode();
+                        .extract().statusCode();
+    }
+
+    public String postProjectDeleteNegative(Integer expectedStatusCode, String idProject){
+        return
+                given()
+                        //.log().all()
+                        .header("Authorization", "Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz")
+                        .header("NewToken", "czwdaFxSSHQwLvB6V6ei-phMdiar/73BUHkerBpth")
+                        .header("Content-Type", "application/json")
+                        .header("Accept" , "application/json")
+                .when()
+                        .post(BASE_URL +"/api/v2/delete_project/" + idProject)
+                .then()
+                        //.log().all()
+                        .statusCode(expectedStatusCode) //возвращает код ответа сервера
+                        .extract().body().asString();
     }
 
     //Шаблон GET-запроса для возврата всех Project или по конкретному коду в TestRail, так как GET-запросы нимеют одинаковую структуру
-    public String getProject(Integer expectedStatusCode, String url){
+    public String getProject(int expectedStatusCode, String url){
         return
                 given()
                         //.log().all()
@@ -84,7 +99,7 @@ public class BaseAdapter {
                         .extract().body().asString();
     }
 
-    public String getProjectAll(Integer expectedStatusCode){
+    public String getProjectAll(int expectedStatusCode){
         return
                 given()
                         //.log().all()

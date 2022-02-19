@@ -6,6 +6,7 @@ import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import models.Project;
 import models.response.ProjectAllPositiveResponse;
+import models.response.ProjectNegativeResponse;
 import models.response.ProjectPositiveResponse;
 import org.testng.ITestContext;
 import org.testng.annotations.DataProvider;
@@ -177,59 +178,35 @@ public class ProjectAPITest extends BaseAPITest {
     public void deleteAPIProject(ITestContext context) {
 
         log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на удаление проекта с id " + (idWorkProject - 1));
-        int actualCode1 = new ProjectAdapter().postOneProjectDelete(200, Integer.toString(idWorkProject - 1));
-        log.debug("Тест " + context.getAttribute("testName") + ": полученный от сервера код ответа - " + actualCode1);
+        int actualCode1 = new ProjectAdapter().postProjectDelete(200, Integer.toString(idWorkProject - 1));
+        log.debug("Тест " + context.getAttribute("testName") + ": сравнить полученный от сервера код ответа '" + actualCode1 + "' с ожидаемым кодом - '200'");
+        assertEquals(actualCode1, 200);
 
         log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на удаление проекта с id " + idWorkProject);
-        int actualCode2 = new ProjectAdapter().postOneProjectDelete(200, Integer.toString(idWorkProject));
-        log.debug("Тест " + context.getAttribute("testName") + ": полученный от сервера код ответа - " + actualCode2);
+        int actualCode2 = new ProjectAdapter().postProjectDelete(200, Integer.toString(idWorkProject));
+        log.debug("Тест " + context.getAttribute("testName") + ": сравнить полученный от сервера код ответа '" + actualCode2 + "' с ожидаемым кодом - '200'");
+        assertEquals(actualCode2, 200);
 
         log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на удаление проекта с id " + (idWorkProject + 1));
-        int actualCode3 = new ProjectAdapter().postOneProjectDelete(200, Integer.toString(idWorkProject + 1));
-        log.debug("Тест " + context.getAttribute("testName") + ": полученный от сервера код ответа - " + actualCode3);
+        int actualCode3 = new ProjectAdapter().postProjectDelete(200, Integer.toString(idWorkProject + 1));
+        log.debug("Тест " + context.getAttribute("testName") + ": сравнить полученный от сервера код ответа '" + actualCode3 + "' с ожидаемым кодом - '200'");
+        assertEquals(actualCode3, 200);
     }
 
-//    @Description("Производится удаление второго созданного проекта")
-//    @Test (description = "API-тест: удаление проекта", priority = 5)
-//    public void deleteProject2(ITestContext context){
-//        int actualCode = new ProjectAdapter().postOneProjectDelete(200,Integer.toString(idWorkProject));
-//        log.info(actualCode);
-//    }
-//
-//    @Description("Производится удаление третьего созданного проекта")
-//    @Test (description = "API-тест: удаление проекта", priority = 5)
-//    public void deleteProject3(ITestContext context){
-//        int actualCode = new ProjectAdapter().postOneProjectDelete(200,Integer.toString(idWorkProject+1));
-//        log.info(actualCode);
-//    }
+    @Description("Производится попытка удаление проекта с кодом, которого нет в БД")
+    @Test(description = "API-тест: удаление несуществующего проекта")
+    public void deleteAPIProjectNegative(ITestContext context) {
 
-    //    @Test
-//    public void getProjectByRealNameAndNotEmptyTest() {
-//        log.info("Search project by correct code and name with cases, suites and other.");
-//        PositiveResponseStatus actual = new ProjectAdapter().getProjectWithCorrectCode(200, "DEMO");
-//        PositiveResponseStatus expected = PositiveResponseStatus.builder()
-//                .status(true)
-//                .result(Result.builder()
-//                        .title("Demo Project")
-//                        .code("DEMO")
-//                        .counts(Counts.builder()
-//                                .cases(10)
-//                                .suites(3)
-//                                .milestones(2)
-//                                .runs(Runs.builder()
-//                                        .total(0)
-//                                        .active(0)
-//                                        .build())
-//                                .defects(Defects.builder()
-//                                        .total(0)
-//                                        .open(0)
-//                                        .build())
-//                                .build())
-//                        .build())
-//                .build();
-//
-//        assertEquals(actual, expected);
-//    }
+        log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на удаление проекта с несуществующим id");
+        ProjectNegativeResponse actual = new ProjectAdapter().postProjectDeleteNegative(400, "50");
 
+        log.debug("Тест " + context.getAttribute("testName") + ": создать объект с ожидаемым от сервера ответом");
+        ProjectNegativeResponse expected = ProjectNegativeResponse.builder()
+                .error("Field :project_id is not a valid or accessible project.")
+                .build();
+        log.debug("Тест " + context.getAttribute("testName") + ": ожидаемый от сервера ответ - " + expected.toString());
 
+        log.debug("Тест " + context.getAttribute("testName") + ": сравнить полученный от сервера ответ с ожидаемым ответом");
+        assertEquals(actual, expected);
+    }
 }
