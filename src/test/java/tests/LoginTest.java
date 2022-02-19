@@ -8,6 +8,8 @@ import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import tests.base.BaseTest;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -30,6 +32,7 @@ public class LoginTest extends BaseTest {
                 .clickButton("Log In");
         log.debug("Тест " + context.getAttribute("testName") + ": проверить, вошли ли в приложение - в меню должен отображаться текущий пользователь");
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
+        $(TOPMENU_ITEM_USERNAME).shouldNotBe().shouldHave(exactText("Dima Hilko")); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko"
     }
 
     @Description("Проверить после выхода из приложение на странице логина наличие кнопки 'Log in'")
@@ -45,5 +48,6 @@ public class LoginTest extends BaseTest {
                 .selectMenuItem("Logout");
         log.debug("Тест " + context.getAttribute("testName") + ": проверить, вышли ли из приложения - на странице должна отображаться кнопка 'Log in'");
         $(LOGINPAGE_BUTTON).shouldBe(visible); //проверяем наличие кнопки "Log in" на открывшейся странице
+        $(LOGINPAGE_BUTTON).shouldNotBe(visible, Duration.ofSeconds(20)); //проверяем наличие кнопки "Log in" на открывшейся странице
     }
 }
