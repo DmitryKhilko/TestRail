@@ -24,7 +24,7 @@ pipeline {
                 // To run Maven on a Windows agent, use
                 //bat "mvn -Dmaven.test.failure.ignore=true clean test"
                 //bat "mvn -Dmaven.test.failure.ignore=true clean test -DsuiteXmlFile='src/test/resources/multi_browser.xml'"
-                bat "mvn -Dmaven.test.failure.ignore=true clean test -DsuiteXmlFile=%TESTRAIL_XMLFILE%"
+                bat "mvn -Dmaven.test.failure.ignore=true clean test"
             }
 
             post {
