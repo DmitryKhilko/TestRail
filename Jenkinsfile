@@ -15,7 +15,7 @@ pipeline {
             steps {
                 // Get some code from a GitHub repository
                 //git 'https://github.com/DmitryKhilko/TestRail.git'
-                git branch: "${params.BRANCH}", url: 'https://github.com/DmitryKhilko/TestRail.git'
+                git branch: "${params.TESTRAIL_BRANCH}", url: 'https://github.com/DmitryKhilko/TestRail.git'
 
 
                 // Run Maven on a Unix agent.
