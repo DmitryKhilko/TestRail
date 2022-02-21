@@ -14,6 +14,7 @@ pipeline {
     string(name: 'TESTRAIL_PASSWORD', defaultValue: 'pVui0CaU1AsUDIXrPMws', description: 'Пароль для входа в приложения TestRail')
     string(name: 'TESTRAIL_USERNAME', defaultValue: 'Dima Hilko', description: 'После входа в приложение TestRail в правом верхнем углу приложения отображается имя пользователя, под которым вошли в приложение')
     string(name: 'TESTRAIL_AUTHORIZATION', defaultValue: 'Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz', description: 'Строка авторизации при выполнении API-тестов для приложения TestRail')
+
     }
 
     stages {
