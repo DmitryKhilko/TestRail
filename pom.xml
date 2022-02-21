@@ -28,7 +28,7 @@
         <jackson-dataformat-yaml.version>2.13.1</jackson-dataformat-yaml.version>
         <rest-assured.version>4.5.1</rest-assured.version>
         <gson.version>2.9.0</gson.version>
-<!--        <suiteXmlFiles>TESTRAIL_XMLFILE</suiteXmlFiles>-->
+        <suiteXmlFiles>src/test/resources/MicsUI_API.xml</suiteXmlFiles>
     </properties>
 
     <build>

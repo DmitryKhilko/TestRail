@@ -12,7 +12,7 @@ pipeline {
 
     parameters{
     gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'TESTRAIL_BRANCH', type: 'PT_BRANCH'
-    string(name: 'TESTRAIL_XMLFILE', defaultValue: 'src/test/resources/regression.xml', description: 'Выбрать XML-файл с набором тестов')
+    //string(name: 'TESTRAIL_XMLFILE', defaultValue: 'src/test/resources/regression.xml', description: 'Выбрать XML-файл с набором тестов')
     string(name: 'TESTRAIL_BASEURL', defaultValue: 'https://hdn.testrail.io/index.php?', description: 'Базовый URL приложения TestRail')
     string(name: 'TESTRAIL_EMAIL', defaultValue: 'hdn_tms@mail.ru', description: 'Логин для входа в приложения TestRail')
     string(name: 'TESTRAIL_PASSWORD', defaultValue: 'pVui0CaU1AsUDIXrPMws', description: 'Пароль для входа в приложения TestRail')
@@ -36,7 +36,7 @@ pipeline {
                 // To run Maven on a Windows agent, use
                 //bat "mvn -Dmaven.test.failure.ignore=true clean test -DsuiteXmlFile=%TESTRAIL_XMLFILE%"
                 //bat "mvn -Dmaven.test.failure.ignore=true clean test -DsuiteXmlFile=${params.TESTRAIL_XMLFILE}"
-                bat "mvn -Dmaven.test.failure.ignore=true clean test -DBROWSER='${params.BROWSER}' -DsuiteXmlFile='${params.TESTRAIL_XMLFILE}'"
+                bat "mvn -Dmaven.test.failure.ignore=true clean test -DBROWSER='${params.BROWSER}'"
             }
 
             post {
