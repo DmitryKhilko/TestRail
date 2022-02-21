@@ -6,9 +6,9 @@ pipeline {
         maven "M3"
     }
 
-       environment {
-            //TESTRAIL_XMLFILE = '${params.TESTRAIL_XMLFILE}'
-        }
+//        environment {
+//             //TESTRAIL_XMLFILE = '${params.TESTRAIL_XMLFILE}'
+//         }
 
     parameters{
     gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'TESTRAIL_BRANCH', type: 'PT_BRANCH'
