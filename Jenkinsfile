@@ -7,8 +7,7 @@ pipeline {
     }
 
        environment {
-            TESTRAIL_XMLFILE = '${params.TESTRAIL_XMLFILE}'
-            DB_ENGINE    = 'sqlite'
+            //TESTRAIL_XMLFILE = '${params.TESTRAIL_XMLFILE}'
         }
 
     parameters{
@@ -37,7 +36,7 @@ pipeline {
                 // To run Maven on a Windows agent, use
                 //bat "mvn -Dmaven.test.failure.ignore=true clean test -DsuiteXmlFile=%TESTRAIL_XMLFILE%"
                 //bat "mvn -Dmaven.test.failure.ignore=true clean test -DsuiteXmlFile=${params.TESTRAIL_XMLFILE}"
-                bat "mvn -Dmaven.test.failure.ignore=true clean test -DBROWSER='${params.BROWSER}'"
+                bat "mvn -Dmaven.test.failure.ignore=true clean test -DBROWSER='${params.BROWSER}' -DsuiteXmlFile='${params.TESTRAIL_XMLFILE}'"
             }
 
             post {
