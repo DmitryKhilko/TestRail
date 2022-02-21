@@ -6,6 +6,11 @@ pipeline {
         maven "M3"
     }
 
+       environment {
+            TESTRAIL_XMLFILE = '${params.TESTRAIL_XMLFILE}'
+            DB_ENGINE    = 'sqlite'
+        }
+
     parameters{
     gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'TESTRAIL_BRANCH', type: 'PT_BRANCH'
     string(name: 'TESTRAIL_XMLFILE', defaultValue: 'src/test/resources/regression.xml', description: 'Выбрать XML-файл с набором тестов')
@@ -14,6 +19,7 @@ pipeline {
     string(name: 'TESTRAIL_PASSWORD', defaultValue: 'pVui0CaU1AsUDIXrPMws', description: 'Пароль для входа в приложения TestRail')
     string(name: 'TESTRAIL_USERNAME', defaultValue: 'Dima Hilko', description: 'После входа в приложение TestRail в правом верхнем углу приложения отображается имя пользователя, под которым вошли в приложение')
     string(name: 'TESTRAIL_AUTHORIZATION', defaultValue: 'Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz', description: 'Строка авторизации при выполнении API-тестов для приложения TestRail')
+    choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'edge'], description: '')
 
     }
 
@@ -31,7 +37,7 @@ pipeline {
                 // To run Maven on a Windows agent, use
                 //bat "mvn -Dmaven.test.failure.ignore=true clean test -DsuiteXmlFile=%TESTRAIL_XMLFILE%"
                 //bat "mvn -Dmaven.test.failure.ignore=true clean test -DsuiteXmlFile=${params.TESTRAIL_XMLFILE}"
-                bat "mvn -Dmaven.test.failure.ignore=true clean test"
+                bat "mvn -Dmaven.test.failure.ignore=true clean test -DBROWSER='${params.BROWSER}'"
             }
 
             post {
