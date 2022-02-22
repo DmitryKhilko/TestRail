@@ -26,7 +26,7 @@ public abstract class BaseTest {
     @BeforeMethod (description = "Настроить и открыть браузер")//Предусловие
     public void setUp(@Optional("chrome") String browser, ITestContext context, ITestResult result) { //@Optional ("chrome") - если не будет передаваться парметр "browser", то запустится по умолчанию в chrome
         log.info("Тест " + result.getMethod().getMethodName() + ": старт"); //команда лога, куда передается имя выполняемого теста
-        log.debug("Передать  из 'multi_browser.xml' в тест " + result.getMethod().getMethodName() + " параметр 'browser' со значением: " + browser); //лог для проверки параллельного запуска тестов в нескольких браузерах
+        log.debug("Передать  в тест " + result.getMethod().getMethodName() + " параметр 'BROWSER' со значением: " + browser); //лог для проверки параллельного запуска тестов в нескольких браузерах
 
         //Выбор, в каком браузере должен запускаться тест
         switch (browser) {
