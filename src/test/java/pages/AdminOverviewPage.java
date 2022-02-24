@@ -4,9 +4,9 @@ import lombok.extern.log4j.Log4j2;
 import org.testng.ITestContext;
 
 @Log4j2
-public class MySettingsPage extends BasePage{
+public class AdminOverviewPage extends BasePage{
 
-    public MySettingsPage(ITestContext context) {
+    public AdminOverviewPage(ITestContext context) {
         super(context);
     }
 }

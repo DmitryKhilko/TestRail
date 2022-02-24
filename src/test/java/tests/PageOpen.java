@@ -25,6 +25,42 @@ public class PageOpen extends BaseTest {
         mySettingsPage.pageTitle().shouldHave(exactText("My Settings"));
     }
 
+    @Description("Проверить после входа на страницу наличие заголовка страницы - 'All Projects'") //описание теста
+    @Test(priority = 2, description = "Перейти на страницу 'Dashboard'")//название теста, название группы
+    public void openDashboardPage(ITestContext context) {
+        loginPage
+                .openPage("/auth/login/")
+                .login(email, password)//email и password - переменные, берущие значения из файла config.properties
+                .selectMenuItemDashboard(); //выбираем пункт меню Dashboard
+        log.debug("Тест " + context.getAttribute("testName") + ": проверить, открылась ли страница 'All Projects'");
+        dashbordPage.pageTitle().shouldHave(exactText("All Projects"));
+    }
+
+    @Description("Проверить после входа на страницу наличие заголовка страницы - 'Overview'") //описание теста
+    @Test(priority = 3, description = "Перейти на страницу 'Overview'")//название теста, название группы
+    public void openAdministrationPage(ITestContext context) {
+        loginPage
+                .openPage("/auth/login/")
+                .login(email, password)//email и password - переменные, берущие значения из файла config.properties
+                .selectMenuItemAdministration(); //выбираем пункт меню Administration
+        log.debug("Тест " + context.getAttribute("testName") + ": проверить, открылась ли страница 'Overview'");
+        adminOverviewPage.pageTitle().shouldHave(exactText("Overview"));
+    }
+
+    @Description("Проверить после входа на страницу наличие заголовка страницы - 'Overview'") //описание теста
+    @Test(priority = 4, description = "Перейти на страницу 'Projects'")//название теста, название группы
+    public void openSubProjectsPage(ITestContext context) {
+        loginPage
+                .openPage("/auth/login/")
+                .login(email, password)//email и password - переменные, берущие значения из файла config.properties
+                .selectMenuItemAdministration(); //выбираем пункт меню Administration
+        adminProjectsOverviewPage
+                .selectMenuItemProjects(); //выбираем пункт меню Projects
+        log.debug("Тест " + context.getAttribute("testName") + ": проверить, открылась ли страница 'Projects'");
+        adminProjectsOverviewPage.pageTitle().shouldHave(exactText("Projects"));
+    }
+
+
 
 
 

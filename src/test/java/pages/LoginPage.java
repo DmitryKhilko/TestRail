@@ -53,7 +53,7 @@ public class LoginPage extends BasePage {
 
     //В соответствии с паттерном "Page Element/Wrappers" создаются элементы Input
     @Step("Войти в приложение, введя логин и пароль")
-    public MenuPage login(String userName, String userPassword) {
+    public HeaderPage login(String userName, String userPassword) {
         log.debug("Тест " + context.getAttribute("testName") + ": ввести в поле ввода логина значение '" + userName + "'");
         $(By.xpath(loginInputLocator)).clear(); //сначала очищаем поле
         $(By.xpath(loginInputLocator)).setValue(userName); //потом вводим текст
@@ -68,6 +68,6 @@ public class LoginPage extends BasePage {
         log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку 'Log In' для входа в приложение");
         loginButton().click(); //нажимаем на кнопку Log In
 
-        return new MenuPage(context); //Инициализуем страницу, на которую переходим
+        return new HeaderPage(context); //Инициализуем страницу, на которую переходим
     }
 }

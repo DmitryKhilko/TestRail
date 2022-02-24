@@ -11,8 +11,8 @@
 //Проверка работоспособности пунктов меню, вкладок (используя локаторы)
 
 6. Перейти на страницу MySettings (MySettingsPage) +
-7. Перейти на страницу AdminOverview (AdminOverviewPage) 
-8. Перейти на страницу AdminProjectsOverview (AdminProjectsOverviewPage)
+7. Перейти на страницу AdminOverview (AdminOverviewPage)+ 
+8. Перейти на страницу AdminProjectsOverview (AdminProjectsOverviewPage) +
 9. Перейти на страницу AdminUsersOverview (AdminUsersOverviewPage)
 10. Перейти на страницу AdminCustomOverview (AdminCustomOverviewPage)
 11. Перейти на страницу AdminCustomOverview (AdminCustomOverviewPage)

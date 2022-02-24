@@ -24,7 +24,7 @@ public class LoginTest extends BaseTest {
                 .openPage("/auth/login/")
                 .login(email, password); //email и password - переменные, берущие значения из файла config.properties
         log.debug("Тест " + context.getAttribute("testName") + ": проверить, вошли ли в приложение - в меню должен отображаться текущий пользователь - '"+ userName + "'");
-        menuPage.menuItemUserName().shouldHave(exactText(userName)); ////на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko" (переменная берущая значение из файла config.properties)
+        headerPage.menuItemUserName().shouldHave(exactText(userName)); ////на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko" (переменная берущая значение из файла config.properties)
     }
 
     @Description("Проверить, появится ли сообщение об ошибке при вводе правильного логина и неправильного пароля") //описание теста

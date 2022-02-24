@@ -8,10 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import pages.DashbordPage;
-import pages.LoginPage;
-import pages.MenuPage;
-import pages.MySettingsPage;
+import pages.*;
 import utils.PropertyReader;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -19,10 +16,14 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 @Log4j2 //аннотация для вставки в клласс команд логирования
 @Listeners({ ScreenShooter.class}) //аннотация для подготовки для принудительного создания скриншотов (даже для зеленых тестов)
 public abstract class BaseTest {
+
     public LoginPage loginPage;
-    public MenuPage menuPage;
+    public HeaderPage headerPage;
     public MySettingsPage mySettingsPage;
     public DashbordPage dashbordPage;
+    public AdminOverviewPage adminOverviewPage;
+    public AdminProjectsOverviewPage adminProjectsOverviewPage;
+
     public String email, password, userName;
 
     @Parameters({"BROWSER"}) //параметр из файла regression_multi_browser.xml (для запуска тестов в нескольких браузерах параллельно)
@@ -44,7 +45,7 @@ public abstract class BaseTest {
                 break;
         }
 
-        //Configuration.headless = true; // браузер запускается без UI. Тесты ускоряются и становятся более стабильными. Браузер использует меньше ОЗУ (где-то в 3 раза). Этот режим просто необходим при параллелоьном запуске тестов
+        Configuration.headless = true; // браузер запускается без UI. Тесты ускоряются и становятся более стабильными. Браузер использует меньше ОЗУ (где-то в 3 раза). Этот режим просто необходим при параллелоьном запуске тестов
         Configuration.browserPosition = "0x0"; //команда задает позицию левого верхнего угла браузера. Без нее браузер при запуске смещен немного вправо, что может привести к невидимости каких-то элементов.
         Configuration.browserSize = "1920x1080"; //задает разрешение, с каким запускается браузер. Этот параметр, как и виды браузеров важен и может потребоваться тестировать на разных разрешениях.
         Configuration.timeout = 10000; // неявное ожидание в милисекундах (10 секунд), указывающее на то, какое максимальное количество времени Selenium будет дожидаться появления элемента (аналог implicitlyWait)
@@ -60,9 +61,11 @@ public abstract class BaseTest {
 
         //Инициализация страниц (которые описаны в пакете pages), с которыми мы будем работать в тестах
         loginPage = new LoginPage(context);
-        menuPage = new MenuPage(context);
+        headerPage = new HeaderPage(context);
         mySettingsPage = new MySettingsPage(context);
         dashbordPage = new DashbordPage(context);
+        adminOverviewPage = new AdminOverviewPage(context);
+        adminProjectsOverviewPage = new AdminProjectsOverviewPage(context);
     }
 
     @AfterMethod(alwaysRun = true, description = "Закрыть браузер") //Постусловие
