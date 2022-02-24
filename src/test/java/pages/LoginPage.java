@@ -49,11 +49,9 @@ public class LoginPage extends BasePage {
         return new MenuPage(context); //Инициализуем страницу, с которой дальше будем работать
     }
 
-//    //В соответствии с паттерном "Page Element/Wrappers" создаются элементы Input
-//    @Step("Заполнить поле ввода")
 //    public LoginPage getErrorMessageNotCorrectEmail() {
 //        log.debug("Тест " + context.getAttribute("testName") + ": вывести сообщение об ошибке при неправильном Email");
-//        new getErrorMessage(); //вводим в поле ввода значение (логин или пароль)
+//        new getErrorMessageElement().getText; //возвращаем текст сообщения об ошибке
 //        return this; //возвращаем текущую страницу
 //    }
 
