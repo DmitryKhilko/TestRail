@@ -12,6 +12,8 @@ import static com.codeborne.selenide.Selenide.open;
 @Log4j2
 public class LoginPage extends BasePage {
 
+
+
     public LoginPage(ITestContext context) {
         super(context);
     }
@@ -46,4 +48,13 @@ public class LoginPage extends BasePage {
         new Button(buttonName, buttonName).click(buttonName);
         return new MenuPage(context); //Инициализуем страницу, с которой дальше будем работать
     }
+
+//    //В соответствии с паттерном "Page Element/Wrappers" создаются элементы Input
+//    @Step("Заполнить поле ввода")
+//    public LoginPage getErrorMessageNotCorrectEmail() {
+//        log.debug("Тест " + context.getAttribute("testName") + ": вывести сообщение об ошибке при неправильном Email");
+//        new getErrorMessage(); //вводим в поле ввода значение (логин или пароль)
+//        return this; //возвращаем текущую страницу
+//    }
+
 }

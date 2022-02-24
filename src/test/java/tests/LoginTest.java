@@ -32,6 +32,26 @@ public class LoginTest extends BaseTest {
         $(TOPMENU_ITEM_USERNAME).shouldHave(exactText(userName)); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko" (переменная берущая значение из файла config.properties)
     }
 
+    @Description("Проверить после входа в приложение наличие пункта меню с именем текущего пользователя") //описание теста
+    @Test(description = "Войти в приложение (валидные логин и пароль)", groups = { "smoke" })//название теста, название группы
+    public void logInValidUsernameAndNotValidPassword(ITestContext context) {
+        //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
+        loginPage
+                .openPage("/auth/login/")
+                .writeToInput("Email",email) //email - переменная берущая значение из файла config.properties
+                .writeToInput("Password","sdfg") //невалидный password
+                .clickCheckboks("Keep me logged in")
+                .clickButton("Log In");
+        log.debug("Тест " + context.getAttribute("testName") + ": проверить, появилась ли надпись ''");
+        $(TOPMENU_ITEM_USERNAME).shouldHave(exactText(userName)); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko" (переменная берущая значение из файла config.properties)
+    }
+
+
+
+
+    //div[contains(text(),'Email/Login or Password is incorrect. Please try again.')]
+
+
     @Description("Проверить после выхода из приложение на странице логина наличие кнопки 'Log in'")
     @Test (description = "Выйти из приложения")
     public void logOut(ITestContext context) {
