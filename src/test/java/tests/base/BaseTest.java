@@ -10,6 +10,8 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.DashbordPage;
 import pages.LoginPage;
+import pages.MenuPage;
+import pages.MySettingsPage;
 import utils.PropertyReader;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -18,7 +20,8 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 @Listeners({ ScreenShooter.class}) //аннотация для подготовки для принудительного создания скриншотов (даже для зеленых тестов)
 public abstract class BaseTest {
     public LoginPage loginPage;
-    //public MenuPage menuPage;
+    public MenuPage menuPage;
+    public MySettingsPage mySettingsPage;
     public DashbordPage dashbordPage;
     public String email, password, userName;
 
@@ -57,7 +60,8 @@ public abstract class BaseTest {
 
         //Инициализация страниц (которые описаны в пакете pages), с которыми мы будем работать в тестах
         loginPage = new LoginPage(context);
-        //menuPage = new MenuPage(context); вызываю страницу из метода login
+        menuPage = new MenuPage(context);
+        mySettingsPage = new MySettingsPage(context);
         dashbordPage = new DashbordPage(context);
     }
 
