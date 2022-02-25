@@ -54,10 +54,10 @@ public class PageOpen extends BaseTest {
                 .openPage("/auth/login/")
                 .login(email, password)//email и password - переменные, берущие значения из файла config.properties
                 .selectMenuItemAdministration(); //выбираем пункт меню Administration
-        adminProjectsOverviewPage
+        adminProjectsPage
                 .selectMenuItemProjects(); //выбираем пункт меню Projects
         log.debug("Тест " + context.getAttribute("testName") + ": проверить, открылась ли страница 'Projects'");
-        adminProjectsOverviewPage.pageTitle().shouldHave(exactText("Projects"));
+        adminProjectsPage.pageTitle().shouldHave(exactText("Projects"));
     }
 
 

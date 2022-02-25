@@ -22,7 +22,7 @@ public abstract class BaseTest {
     public MySettingsPage mySettingsPage;
     public DashbordPage dashbordPage;
     public AdminOverviewPage adminOverviewPage;
-    public AdminProjectsOverviewPage adminProjectsOverviewPage;
+    public AdminProjectsPage adminProjectsPage;
 
     public String email, password, userName;
 
@@ -65,7 +65,7 @@ public abstract class BaseTest {
         mySettingsPage = new MySettingsPage(context);
         dashbordPage = new DashbordPage(context);
         adminOverviewPage = new AdminOverviewPage(context);
-        adminProjectsOverviewPage = new AdminProjectsOverviewPage(context);
+        adminProjectsPage = new AdminProjectsPage(context);
     }
 
     @AfterMethod(alwaysRun = true, description = "Закрыть браузер") //Постусловие
