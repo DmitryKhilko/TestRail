@@ -21,8 +21,7 @@ public class PageOpen extends BaseTest {
                 .login(email, password)//email и password - переменные, берущие значения из файла config.properties
                  .selectMenuItem("My Settings"); //выбираем пункт меню My Settings
         log.debug("Тест " + context.getAttribute("testName") + ": проверить, открылась ли страница 'My Settings'");
-        //menuPage.menuItemUserName().shouldHave(exactText(userName)); //на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko" (переменная берущая значение из файла config.properties)
-        mySettingsPage.pageTitle().shouldHave(exactText("My Settings"));
+        mySettingsPage.pageTitle().shouldHave(exactText("My Settings")); //на открывшейся странице ее название должно быть My Settings
     }
 
     @Description("Проверить после входа на страницу наличие заголовка страницы - 'All Projects'") //описание теста
