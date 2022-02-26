@@ -6,18 +6,13 @@ pipeline {
         maven "M3"
     }
 
-//        environment {
-//             //TESTRAIL_XMLFILE = '${params.TESTRAIL_XMLFILE}'
-//         }
-
     parameters{
     gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'TESTRAIL_BRANCH', type: 'PT_BRANCH'
-    //string(name: 'TESTRAIL_XMLFILE', defaultValue: 'src/test/resources/regression.xml', description: 'Выбрать XML-файл с набором тестов')
-    string(name: 'TESTRAIL_BASEURL', defaultValue: 'https://hdn.testrail.io/index.php?', description: 'Базовый URL приложения TestRail')
-    string(name: 'TESTRAIL_EMAIL', defaultValue: 'hdn_tms@mail.ru', description: 'Логин для входа в приложения TestRail')
-    string(name: 'TESTRAIL_PASSWORD', defaultValue: 'pVui0CaU1AsUDIXrPMws', description: 'Пароль для входа в приложения TestRail')
-    string(name: 'TESTRAIL_USERNAME', defaultValue: 'Dima Hilko', description: 'После входа в приложение TestRail в правом верхнем углу приложения отображается имя пользователя, под которым вошли в приложение')
-    string(name: 'TESTRAIL_AUTHORIZATION', defaultValue: 'Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz', description: 'Строка авторизации при выполнении API-тестов для приложения TestRail')
+    string(name: 'TESTRAIL_BASEURL', defaultValue: 'https://hdn.testrail.io/index.php?', description: '')
+    string(name: 'TESTRAIL_EMAIL', defaultValue: 'hdn_tms@mail.ru', description: '')
+    string(name: 'TESTRAIL_PASSWORD', defaultValue: 'pVui0CaU1AsUDIXrPMws', description: '')
+    string(name: 'TESTRAIL_USERNAME', defaultValue: 'Dima Hilko', description: '')
+    string(name: 'TESTRAIL_AUTHORIZATION', defaultValue: 'Basic aGRuX3Rtc0BtYWlsLnJ1OnBWdWkwQ2FVMUFzVURJWHJQTXdz', description: '')
     choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'edge'], description: '')
 
     }

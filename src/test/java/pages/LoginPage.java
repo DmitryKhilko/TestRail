@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 @Log4j2
 public class LoginPage extends BasePage {
-
+    public static final String LOGIN_PAGE_URL = "/auth/login/";
     String loginInputLocator = "//input[@id='name']"; //локатор объявляем здесь (локально на конкретной page), так как он больше нигде не понадобится
     String passwordInputLocator = "//input[@id='password']"; //локатор объявляем здесь (локально на конкретной page), так как он больше нигде не понадобится
     String checboksLocator = "//span[@class='loginpage-checkmark']"; //локатор объявляем здесь (локально на конкретной page), так как он больше нигде не понадобится
@@ -70,4 +70,6 @@ public class LoginPage extends BasePage {
 
         return new HeaderPage(context); //Инициализуем страницу, на которую переходим
     }
+
+
 }

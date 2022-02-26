@@ -12,6 +12,8 @@ import static com.codeborne.selenide.Selenide.$;
 public class HeaderPage extends BasePage {
 
     String navigationUserLocator = "//a[@id = 'navigation-user']"; //пункт меню с именем текущего пользователя
+    String menuItemLogoutLocator = "//a[@id='navigation-user-logout']"; // пункт меню 'Logout'
+    String menuItemMySettingLocator = "//a[@id='navigation-user-settings']"; // пункт меню 'My Setting'
     String menuItemLocator = "//a[@class='dropdown-menu-link'][contains(text(),'%s')]"; //остальные пункты меню
     String menuItemName; //переменная часть локатора (%s) - название пункта меню
     String navigationDashboardLocator = "//a[@id='navigation-dashboard']"; // пункт меню 'Dashboard'
@@ -64,5 +66,25 @@ public class HeaderPage extends BasePage {
         log.debug("Тест " + context.getAttribute("testName") + ": выбрать пункт меню '" + menuItemName + "'");
         $(By.xpath(String.format(menuItemLocator, menuItemName))).click();
         return this;
+    }
+
+    //Создаем метод выбора пункта меню
+    @Step("Выбрать пункт меню 'Logout'")
+    public LoginPage selectMenuItemLogout() {
+        log.debug("Тест " + context.getAttribute("testName") + ": выбрать пункт меню с именем текущего пользователя");
+        $(By.xpath(navigationUserLocator)).click();
+        log.debug("Тест " + context.getAttribute("testName") + ": выбрать пункт меню 'Logout'");
+        $(By.xpath(menuItemLogoutLocator)).click();
+        return new LoginPage(context);
+    }
+
+    //Создаем метод выбора пункта меню
+    @Step("Выбрать пункт меню 'My Setting'")
+    public MySettingsPage selectMenuItemMySetting() {
+        log.debug("Тест " + context.getAttribute("testName") + ": выбрать пункт меню с именем текущего пользователя");
+        $(By.xpath(navigationUserLocator)).click();
+        log.debug("Тест " + context.getAttribute("testName") + ": выбрать пункт меню 'My Setting'");
+        $(By.xpath(menuItemMySettingLocator)).click();
+        return new MySettingsPage(context);
     }
 }

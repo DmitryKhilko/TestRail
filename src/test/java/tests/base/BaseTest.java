@@ -24,6 +24,7 @@ public abstract class BaseTest {
     public AdminOverviewPage adminOverviewPage;
     public AdminProjectsPage adminProjectsPage;
     public AddProjectPage addProjectPage;
+    public EditProjectPage editProjectPage;
     public ProjectPage projectPage;
 
     public String email, password, userName;
@@ -69,6 +70,7 @@ public abstract class BaseTest {
         adminOverviewPage = new AdminOverviewPage(context);
         adminProjectsPage = new AdminProjectsPage(context);
         addProjectPage = new AddProjectPage(context);
+        editProjectPage = new EditProjectPage(context);
         projectPage = new ProjectPage(context);
     }
 

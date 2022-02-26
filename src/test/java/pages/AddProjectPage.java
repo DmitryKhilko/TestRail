@@ -11,6 +11,8 @@ import static com.codeborne.selenide.Selenide.$$;
 @Log4j2
 public class AddProjectPage extends BasePage{
 
+    public static final String ADD_PROJECT_PAGE_TITLE = "Add Project";
+    String addProgectButtonLocator = "//a[@id='sidebar-projects-add']"; // кнопка Add Project на странице Dashbord (на слайдбаре)
     String nameLocator = "//input[@id='name']";
     String announcementLocator = "//textarea[@id='announcement']";
     String showAnnouncementLocator = "//input[@id='show_announcement']";
@@ -23,7 +25,10 @@ public class AddProjectPage extends BasePage{
 
     //В соответствии с паттерном "Page Element/Wrappers" создаются проект
     @Step("Создать проект")
-    public ProjectPage createNewProject(String projectName, String announcement) {
+    public ProjectPage createNewProject(String projectName, String announcement, int suiteModeNumber) {
+        log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку '+Add Project' для перехода к созданию нового проекта");
+        $(By.xpath(addProgectButtonLocator)).click();
+
         log.debug("Тест " + context.getAttribute("testName") + ": ввести в поле ввода Name имя нового проекта '" + projectName + "'");
         $(By.xpath(nameLocator)).clear(); //сначала очищаем поле
         $(By.xpath(nameLocator)).setValue(projectName); //потом вводим текст
@@ -36,9 +41,9 @@ public class AddProjectPage extends BasePage{
         $(By.xpath(showAnnouncementLocator)).click(); //щелкаем по чекбоксу (устанавливаем флажок)
 
         log.debug("Тест " + context.getAttribute("testName") + ": выбираем нужный Suite Mode");
-        $$(By.xpath(suiteModeLocator)).get(1).click(); //выбираем первую радиокнопку
+        $$(By.xpath(suiteModeLocator)).get(suiteModeNumber).click(); //выбираем первую радиокнопку
 
-        log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку 'Log In' для входа в приложение");
+        log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку '+Add Project' для создания проекта");
         $(By.xpath(addProjectButtonLocator)).click(); //нажимаем на кнопку Add Project
 
         return new ProjectPage(context); //Инициализуем страницу, на которую переходим
