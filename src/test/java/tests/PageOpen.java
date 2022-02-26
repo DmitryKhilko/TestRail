@@ -46,7 +46,7 @@ public class PageOpen extends BaseTest {
 
     @Description("Перейти на страницу 'Projects'. Проверить после входа на страницу наличие заголовка страницы - 'Projects'") //описание теста
     @Test(priority = 4, description = "Перейти на страницу 'Projects'")//название теста, название группы
-    public void openSubProjectsPage(ITestContext context) {
+    public void openProjectsPage(ITestContext context) {
         loginPage
                 .openPage(LOGIN_PAGE_URL) //открываем приложение
                 .login(email, password)//email и password - переменные, берущие значения из файла config.properties
@@ -57,7 +57,7 @@ public class PageOpen extends BaseTest {
     }
 
     @Description("Произвести выход из приложения. Проверить после выхода наличие на странице логина кнопки 'Log in'")
-    @Test (priority = 11, description = "Выйти из приложения")
+    @Test (priority = 5, description = "Выйти из приложения")
     public void logout(ITestContext context) {
         loginPage
                 .openPage(LOGIN_PAGE_URL) //открываем приложение

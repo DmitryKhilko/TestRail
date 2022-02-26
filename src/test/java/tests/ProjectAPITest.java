@@ -41,9 +41,9 @@ public class ProjectAPITest extends BaseAPITest {
     @DataProvider(name = "addProjectData")
     public Object[][] addProjectData() {
         return new Object[][]{
-                {"Проект 1", "Описание проекта: создание 1", true, 1},
-                {"Проект 2", "Описание проекта: создание 2", true, 1},
-                {"Проект 3", "Описание проекта: создание 3", true, 1}
+                {"Проект 1 (API)", "Описание проекта: создание 1", true, 1},
+                {"Проект 2 (API)", "Описание проекта: создание 2", true, 1},
+                {"Проект 3 (API)", "Описание проекта: создание 3", true, 1}
         };
     }
 
@@ -82,7 +82,7 @@ public class ProjectAPITest extends BaseAPITest {
         log.debug("Тест " + context.getAttribute("testName") + ": ожидаемые данные для проекта '" + name + "' -" + expected.toString());
 
         log.debug("Тест " + context.getAttribute("testName") + ": присвоить переменным ожидаемые значения полей проекта для последующих тестов по поиску, редактированию проекта");
-        if (expected.getName().equals("Проект 2")) {
+        if (expected.getName().equals("Проект 2 (API)")) {
             idWorkProject = actual.getId();
             nameWorkProject = expected.getName();
             announcementWorkProject = expected.getAnnouncement();

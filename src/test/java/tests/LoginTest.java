@@ -1,6 +1,5 @@
 package tests;
 
-import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.TmsLink;
@@ -10,6 +9,7 @@ import org.testng.annotations.Test;
 import tests.base.BaseTest;
 
 import static com.codeborne.selenide.Condition.exactText;
+import static pages.LoginPage.LOGIN_PAGE_URL;
 
 @Log4j2
 //Проверка входа в приложение
@@ -19,9 +19,9 @@ public class LoginTest extends BaseTest {
     @Description("Проверить после входа в приложение наличие пункта меню с именем текущего пользователя") //описание теста
     @Test(priority = 1, description = "Войти в приложение (валидные логин и пароль)")//название теста, название группы
     public void loginValidUsernameAndPassword(ITestContext context) {
-        ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
+        //ScreenShooter.captureSuccessfulTests = true; //команда, разрешающая делать скриншоты для зеленых тестов (только скрины с проверок shouldHave и shouldBe
         loginPage
-                .openPage("/auth/login/")
+                .openPage(LOGIN_PAGE_URL)
                 .login(email, password); //email и password - переменные, берущие значения из файла config.properties
         log.debug("Тест " + context.getAttribute("testName") + ": проверить, вошли ли в приложение - в меню должен отображаться текущий пользователь - '"+ userName + "'");
         headerPage.menuItemUserName().shouldHave(exactText(userName)); ////на открывшейся странице текст пункта меню должен иметь точный текст "Dima Hilko" (переменная берущая значение из файла config.properties)
@@ -31,7 +31,7 @@ public class LoginTest extends BaseTest {
     @Test(priority = 2, description = "Войти в приложение (логин валидный, пароль не валидный)")//название теста
     public void loginValidUsernameAndInvalidPassword(ITestContext context) {
         loginPage
-                .openPage("/auth/login/")
+                .openPage(LOGIN_PAGE_URL)
                 .login(email, "123"); //email - переменная, берущая значение из файла config.properties
         log.debug("Тест " + context.getAttribute("testName") + ": при вводе некорректного пароля проверить появление сообщения об ошибке 'Email/Login or Password is incorrect'");
         loginPage.errorMessageForInvalidValue().shouldHave(exactText("Email/Login or Password is incorrect. Please try again.")); //при попытке входа с некорректным паролем выдается сообщение об ошибке
@@ -41,7 +41,7 @@ public class LoginTest extends BaseTest {
     @Test(priority = 3, description = "Войти в приложение (логин невалидный, пароль валидный)")//название теста
     public void loginInvalidUsernameAndValidPassword(ITestContext context) {
         loginPage
-                .openPage("/auth/login/")
+                .openPage(LOGIN_PAGE_URL)
                 .login("123", password); //password - переменная, берущая значение из файла config.properties
         log.debug("Тест " + context.getAttribute("testName") + ": при вводе некорректного логина проверить появление сообщения об ошибке 'Email/Login or Password is incorrect'");
         loginPage.errorMessageForInvalidValue().shouldHave(exactText("Email/Login or Password is incorrect. Please try again."));
@@ -51,7 +51,7 @@ public class LoginTest extends BaseTest {
     @Test(priority = 4, description = "Войти в приложение (логин валидный, пароль пустой)")//название теста
     public void loginValidUsernameAndIsEmptyPassword(ITestContext context) {
         loginPage
-                .openPage("/auth/login/")
+                .openPage(LOGIN_PAGE_URL)
                 .login(email, ""); //email - переменная, берущая значение из файла config.properties
         log.debug("Тест " + context.getAttribute("testName") + ": при вводе пустого пароля проверить появление сообщения об ошибке 'Password is required'");
         loginPage.errorMessageWhenValueIsEmpty().shouldHave(exactText("Password is required."));
@@ -61,7 +61,7 @@ public class LoginTest extends BaseTest {
     @Test(priority = 5, description = "Войти в приложение (логин пустой, пароль корректный)")//название теста
     public void loginIsEmptyUsernameAndValidPassword(ITestContext context) {
         loginPage
-                .openPage("/auth/login/")
+                .openPage(LOGIN_PAGE_URL)
                 .login("", password); //password - переменная, берущая значение из файла config.properties
         log.debug("Тест " + context.getAttribute("testName") + ": при вводе пустого логина проверить появление сообщения об ошибке 'Email/Login is required'");
         loginPage.errorMessageWhenValueIsEmpty().shouldHave(exactText("Email/Login is required."));

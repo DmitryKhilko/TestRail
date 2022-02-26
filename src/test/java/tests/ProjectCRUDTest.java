@@ -14,8 +14,8 @@ import static pages.LoginPage.LOGIN_PAGE_URL;
 //Работа с Projects (CRUD)
 public class ProjectCRUDTest extends BaseTest {
 
-    String NAME_PROJECT = "Проект 1";
-    String NAME_PROJECT_UPDATE = "Проект 1_обновлено";
+    String NAME_PROJECT = "Проект 1 (UI)";
+    String NAME_PROJECT_UPDATE = "Проект 1 (UI)_обновлено";
     String ANNOUNCEMENT_TEXT = "Ссылка на базу знаний...";
     String ANNOUNCEMENT_TEXT_UPDATE = "Ссылка на базу знаний_обновлено...";
     int SUITE_MODE_NUMBER = 1;
@@ -66,7 +66,7 @@ public class ProjectCRUDTest extends BaseTest {
                 .login(email, password); //email и password - переменные, берущие значения из файла config.properties
         adminProjectsPage
                 .openPage(ADMIN_PROJECT_PAGE_URL) //открываем сразу нужную страницу, чтобы избежать нажатий на кнопки (это проверялось раньше)
-                .deleteProject(NAME_PROJECT) //удаляем проект
+                .deleteProject(NAME_PROJECT_UPDATE) //удаляем проект
                 .projectActionResultMessage().shouldHave(exactText(PROJECT_SUCCESS_DELETION_MESSAGE)); //проверяем - при спешном удалении выводится эта надпись
     }
 }

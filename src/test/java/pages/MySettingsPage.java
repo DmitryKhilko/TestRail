@@ -10,3 +10,5 @@ public class MySettingsPage extends BasePage{
         super(context);
     }
 }
+
+
