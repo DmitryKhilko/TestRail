@@ -26,6 +26,8 @@ public abstract class BaseTest {
     public AddProjectPage addProjectPage;
     public EditProjectPage editProjectPage;
     public ProjectPage projectPage;
+    public SectionPage sectionPage;
+
 
     public String email, password, userName;
 
@@ -72,6 +74,7 @@ public abstract class BaseTest {
         addProjectPage = new AddProjectPage(context);
         editProjectPage = new EditProjectPage(context);
         projectPage = new ProjectPage(context);
+        sectionPage = new SectionPage(context);
     }
 
     @AfterMethod(alwaysRun = true, description = "Закрыть браузер") //Постусловие

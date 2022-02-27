@@ -11,7 +11,7 @@ pipeline {
     string(name: 'TESTRAIL_BASEURL', defaultValue: 'https://hdnd.testrail.io/index.php?', description: '')
     string(name: 'TESTRAIL_EMAIL', defaultValue: 'hdn_tmsd@mail.ru', description: '')
     string(name: 'TESTRAIL_PASSWORD', defaultValue: 'yPn9GrueGH.KzMIiFUfX', description: '')
-    string(name: 'TESTRAIL_USERNAME', defaultValue: 'Dima Hilko', description: '')
+    string(name: 'TESTRAIL_USERNAME', defaultValue: 'Khilko Dima', description: '')
     string(name: 'TESTRAIL_AUTHORIZATION', defaultValue: 'Basic aGRuX3Rtc2RAbWFpbC5ydTp5UG45R3J1ZUdILkt6TUlpRlVmWA==', description: '')
     choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'edge'], description: '')
 
