@@ -1,5 +1,6 @@
 package pages;
 
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
@@ -13,6 +14,7 @@ public class AdminProjectsPage extends BasePage{
 
     public static final String ADMIN_PROJECT_PAGE_URL = "/admin/projects/overview";
     String navigationSubProjectsLocator = "//a[@id='navigation-sub-projects']"; //пункт меню Projects
+    String projectNameLocator = "//table[@class='grid']//a[contains(text(),'%s')]"; // искомый проект на странице
     String iconDeleteLocator = "//table[@class='grid']//a[contains(text(),'%s')]/ancestor::tr//div[@class='icon-small-delete']"; // кружочeк с крестиком для удаления проекта на странице
     String deleteCheckboxLocator = "//div[@id='deleteDialog']//input[@name='deleteCheckbox']"; // чекбокс на даилоговом окне подтверждения удаления проекта
     String okButtonLocator = "//div[@id='deleteDialog']//a[contains(@class, 'button-ok')]"; // кнопка Ok на даилоговом окне подтверждения удаления проекта
@@ -50,9 +52,9 @@ public class AdminProjectsPage extends BasePage{
         return this;
     }
 
-//    //Метод возвращает вэб-элемент - надпись об успешном удалении проекта
-//    public SelenideElement projectActionResultMessage() {
-//        log.debug("Тест " + context.getAttribute("testName") + ": возвратить элемент - пункт меню 'Dashboard'");
-//        return $(By.xpath(messageSuccessLocator));
-//    }
+    //Метод возвращает вэб-элемент - проект (для проверки создания)
+    public SelenideElement projectName(String projectName) {
+        log.debug("Тест " + context.getAttribute("testName") + ": возвратить элемент - созданный проект");
+        return $(By.xpath(String.format(projectNameLocator, projectName)));
+    }
 }

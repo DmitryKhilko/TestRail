@@ -28,7 +28,7 @@ public class TestCaseCRUDTest extends BaseTest {
     public String TESTCASE_SUCCESS_ADDED_MESSAGE2 = "Successfully added the new test case. Add another";
 
     @Description("Произвести добавление нового тест кейса с валидными значениями полей") //описание теста
-    @Test(priority = 8, description = "Добавление тест кейса (валидные значения)")//название теста
+    @Test(priority = 9, description = "Добавление тест кейса (валидные значения)")//название теста
     public void addTestCaseValidName(ITestContext context) {
         log.debug("Тест " + context.getAttribute("testName") + ": войти в приложение c логином '" + email + "' и паролем '" + password + "'");
         loginPage
@@ -37,6 +37,10 @@ public class TestCaseCRUDTest extends BaseTest {
         log.debug("Тест " + context.getAttribute("testName") + ": создать новый проект '" + PROJECT_NAME2 + "'");
         projectAddPage
                 .createNewProject(PROJECT_NAME2, PROJECT_ANNOUNCEMENT_TEXT2, PROJECT_SUITE_MODE_NUMBER2);
+        log.debug("Тест " + context.getAttribute("testName") + ": открыть проект '" + PROJECT_NAME2 + "'");
+        headerPage
+                .selectMenuItemDashboard()
+                .openProject(PROJECT_NAME2);
         log.debug("Тест " + context.getAttribute("testName") + ": создать новый раздел '" + SECTION_NAME2 + "'");
         testCaseAddSectionPage
                 .createNewSection(SECTION_NAME2, SECTION_DESCRIPTION2); //создать новый раздел
@@ -48,7 +52,7 @@ public class TestCaseCRUDTest extends BaseTest {
 
     @Description("Произвести удаление проекта. При успешном удалении проекта будет выведено сообщение 'Successfully deleted the project.'")
     //описание теста
-    @Test(priority = 9, description = "Удалить проект")//название теста
+    @Test(priority = 10, description = "Удалить проект")//название теста
     public void deleteProject(ITestContext context) {
         loginPage
                 .openPage(LOGIN_PAGE_URL)//открываем страницу логина

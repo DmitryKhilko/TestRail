@@ -25,7 +25,7 @@ public class ProjectAddPage extends BasePage{
 
     //В соответствии с паттерном "Page Element/Wrappers" создаются проект
     @Step("Создать проект")
-    public ProjectOverviewPage createNewProject(String projectName, String announcement, int suiteModeNumber) {
+    public AdminProjectsPage createNewProject(String projectName, String announcement, int suiteModeNumber) {
         log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку '+Add Project' для перехода к созданию нового проекта");
         $(By.xpath(addProgectButtonLocator)).click();
 
@@ -46,6 +46,6 @@ public class ProjectAddPage extends BasePage{
         log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку '+Add Project' для создания проекта");
         $(By.xpath(addProjectButtonLocator)).click(); //нажимаем на кнопку Add Project
 
-        return new ProjectOverviewPage(context); //Инициализуем страницу, на которую переходим
+        return new AdminProjectsPage(context); //Инициализуем страницу, на которую переходим
     }
 }

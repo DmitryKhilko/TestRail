@@ -23,7 +23,7 @@ public class SectionCRUDTest extends BaseTest {
     public String SECTION_DESCRIPTION1 = "Описание модуля...";
 
     @Description("Произвести добавление нового раздела с валидными значениями полей для добавления в него тест-кейсов. При успешном создании проекта произойдет переход на страницу с заголовком 'Add Project'") //описание теста
-    @Test(priority = 5, description = "Произвести добавление нового раздела (валидные значения)")//название теста
+    @Test(priority = 6, description = "Произвести добавление нового раздела (валидные значения)")//название теста
     public void addSectionValidName(ITestContext context) {
         log.debug("Тест " + context.getAttribute("testName") + ": войти в приложение c логином '" + email + "' и паролем '" + password + "'");
         loginPage
@@ -32,14 +32,18 @@ public class SectionCRUDTest extends BaseTest {
         log.debug("Тест " + context.getAttribute("testName") + ": создать новый проект '" + PROJECT_NAME1 + "'");
         projectAddPage
                 .createNewProject(PROJECT_NAME1, PROJECT_ANNOUNCEMENT_TEXT1, PROJECT_SUITE_MODE_NUMBER1);
-        log.debug("Тест " + context.getAttribute("testName") + ": создать новый раздел '" + SECTION_NAME1 + "'");
+        log.debug("Тест " + context.getAttribute("testName") + ": открыть проект '" + PROJECT_NAME1 + "'");
+        headerPage
+                .selectMenuItemDashboard()
+                .openProject(PROJECT_NAME1);
+        log.debug("Тест " + context.getAttribute("testName") + ": создать  в проекте новый раздел '" + SECTION_NAME1 + "'");
         testCaseAddSectionPage
                 .createNewSection(SECTION_NAME1, SECTION_DESCRIPTION1) //создать новый раздел
                 .sectionNameInSectionTree().shouldHave(exactText(SECTION_NAME1)); // проверяем, отображается ли в дереве разделов созданный раздел
     }
 
     @Description("Произвести удаление раздела") //описание теста
-    @Test(priority = 6, description = "Удалить раздел")//название теста
+    @Test(priority = 7, description = "Удалить раздел")//название теста
     public void deleteSection(ITestContext context) {
         log.debug("Тест " + context.getAttribute("testName") + ": войти в приложение c логином '" + email + "' и паролем '" + password + "'");
         loginPage
@@ -56,7 +60,7 @@ public class SectionCRUDTest extends BaseTest {
 
     @Description("Произвести удаление проекта. При успешном удалении проекта будет выведено сообщение 'Successfully deleted the project.'")
     //описание теста
-    @Test(priority = 7, description = "Удалить проект")//название теста
+    @Test(priority = 8, description = "Удалить проект")//название теста
     public void deleteProject(ITestContext context) {
         loginPage
                 .openPage(LOGIN_PAGE_URL)//открываем страницу логина

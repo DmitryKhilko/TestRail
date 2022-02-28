@@ -57,7 +57,7 @@ public class ProjectAPITest extends BaseAPITest {
 
     @Step("Создать новый проект")
     @Description("Производится создание проекта на основе передаеваемых данных из @DataProvider и провекра создания данного проекта")
-    @Test(description = "API-тест: создание проекта", priority = 1, dataProvider = "addProjectData")
+    @Test(description = "API-тест: создание проекта", priority = 12, dataProvider = "addProjectData")
     public void addAPIProject(ITestContext context, String name, String announcement, Boolean show_announcement, Integer suite_mode) {
         log.debug("Тест " + context.getAttribute("testName") + ": создать requestBody для передачи его в POST-запрос");
         Project requestBody = Project.builder()
@@ -97,7 +97,7 @@ public class ProjectAPITest extends BaseAPITest {
 
     @Step("Получить данные о проекта по его id")
     @Description("Производится получение данных о 2-м проекте по id и проверка того, что полученные данные соответствуют данным, на основе которых был создан проект")
-    @Test(description = "API-тест: получение данных об одном проекте", priority = 2)
+    @Test(description = "API-тест: получение данных об одном проекте", priority = 13)
     public void getAPIOneProject(ITestContext context) {
 
         log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер GET-запрос на получение данных о проекте с id " + idWorkProject);
@@ -120,7 +120,7 @@ public class ProjectAPITest extends BaseAPITest {
 
     @Step("Изменить проект")
     @Description("Производится внесение изменений во 2-й проект на основе передаеваемых данных из @DataProvider и провекра сохранения изменений проекта")
-    @Test(description = "API-тест: изменение проекта", priority = 3, dataProvider = "updateProjectData")
+    @Test(description = "API-тест: изменение проекта", priority = 14, dataProvider = "updateProjectData")
     public void updateAPIProject(ITestContext context, String name, String announcement, Boolean show_announcement) {
 
         log.debug("Тест " + context.getAttribute("testName") + ": создать объект с перечнем данных для последующего изменения проекта c id " + idWorkProject);
@@ -157,7 +157,7 @@ public class ProjectAPITest extends BaseAPITest {
 
     @Step("Получить данные обо всех ранее созданных проектах")
     @Description("Производится получение данных обо всех созданных проектах, поиск в них 2-го проекта и проверка того, что изменения в проекте сохранены")
-    @Test(description = "API-тест: получение данных обо всех проектах", priority = 4)
+    @Test(description = "API-тест: получение данных обо всех проектах", priority = 15)
     public void getAPIAllProject(ITestContext context) {
 
         log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер GET-запрос на получение данных обо всех созданных проектах");
@@ -177,7 +177,7 @@ public class ProjectAPITest extends BaseAPITest {
 
     @Step("Удалить все ранее созданные проекты")
     @Description("Производится удаление всех созданных проектов")
-    @Test(description = "API-тест: удаление созданных проектов", priority = 5)
+    @Test(description = "API-тест: удаление созданных проектов", priority = 16)
     public void deleteAPIProject(ITestContext context) {
 
         log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на удаление проекта с id " + (idWorkProject - 1));
@@ -198,7 +198,7 @@ public class ProjectAPITest extends BaseAPITest {
 
     @Step("Создать новый проект")
     @Description("Производится попытка создания проекта с пустым названием. В результате сервер вернет Status Code 400 и JSON {\"error\": \"Field :name is a required field.\"}")
-    @Test(description = "API-тест: создание проекта с пустым названием")
+    @Test(description = "API-тест: создание проекта с пустым названием", priority = 17)
     public void addAPIProjectNegativeEmptyName(ITestContext context) {
         log.debug("Тест " + context.getAttribute("testName") + ": создать requestBody для передачи его в POST-запрос");
         Project requestBody = Project.builder()
@@ -223,7 +223,7 @@ public class ProjectAPITest extends BaseAPITest {
 
     @Step("Создать новый проект")
     @Description("Производится попытка создания проекта с некорректным значением suite_mode (1,2,3 - корректные значения). В результате сервер вернет Status Code 400 и JSON {\"error\": \"Field :name is a required field.\"}")
-    @Test(description = "API-тест: создание проекта с некорректным значением suite_mode")
+    @Test(description = "API-тест: создание проекта с некорректным значением suite_mode", priority = 18)
     public void addAPIProjectNegativeNotCorrectSuiteMode(ITestContext context) {
         log.debug("Тест " + context.getAttribute("testName") + ": создать requestBody для передачи его в POST-запрос");
         Project requestBody = Project.builder()
@@ -248,7 +248,7 @@ public class ProjectAPITest extends BaseAPITest {
 
     @Step("Удалить проект")
     @Description("Производится попытка удаление проекта с кодом, которого нет в БД")
-    @Test(description = "API-тест: удаление несуществующего проекта")
+    @Test(description = "API-тест: удаление несуществующего проекта", priority = 19)
     public void deleteAPIProjectNegative(ITestContext context) {
 
         log.debug("Тест " + context.getAttribute("testName") + ": создать и отправить на сервер POST-запрос на удаление проекта с несуществующим id");

@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import tests.base.BaseTest;
 
 import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.visible;
 import static pages.AdminProjectsPage.ADMIN_PROJECT_PAGE_URL;
 import static pages.LoginPage.LOGIN_PAGE_URL;
 
@@ -23,9 +24,8 @@ public class ProjectCRUDTest extends BaseTest {
     public String PROJECT_SUCCESS_UPDATION_MESSAGE = "Successfully updated the project.";
     public String PROJECT_SUCCESS_DELETION_MESSAGE = "Successfully deleted the project.";
 
-    @Description("Произвести добавления проекта с валидными значениями полей. При успешном создании проекта произойдет переход на страницу с заголовком 'Add Project'")
-    //описание теста
-    @Test(priority = 1, description = "Создать проект (валидные значения)")//название теста
+    @Description("Произвести добавления проекта с валидными значениями полей. При успешном создании проекта произойдет переход на страницу с заголовком 'Projects'") //описание теста
+    @Test(priority = 2, description = "Создать проект (валидные значения)")//название теста
     public void addProjectValidValue(ITestContext context) {
         log.debug("Тест " + context.getAttribute("testName") + ": войти в приложение c логином '" + email + "' и паролем '" + password + "'");
         loginPage
@@ -34,14 +34,14 @@ public class ProjectCRUDTest extends BaseTest {
         log.debug("Тест " + context.getAttribute("testName") + ": создать новый проект '" + PROJECT_NAME + "'");
         projectAddPage
                 .createNewProject(PROJECT_NAME, PROJECT_ANNOUNCEMENT_TEXT, PROJECT_SUITE_MODE_NUMBER);
-        log.debug("Тест " + context.getAttribute("testName") + ": убедится, что созданный проект '" + PROJECT_NAME + "' открылся");
-        projectOverviewPage
-                .pageTitle().shouldHave(exactText(PROJECT_NAME)); //на открывшейся странице ее название должно быть "Проект 1"
+        log.debug("Тест " + context.getAttribute("testName") + ": убедится, что проект '" + PROJECT_NAME + "' создан");
+        adminProjectsPage
+                .projectName(PROJECT_NAME).shouldBe(visible);
     }
 
     @Description("Произвести считывание добавленного проекта. При успешном создании проект будет отображаться на странице 'Dashbord'")
     //описание теста
-    @Test(priority = 2, description = "Произвести считывание добавленного проекта")//название теста
+    @Test(priority = 3, description = "Произвести считывание добавленного проекта")//название теста
     public void readProject(ITestContext context) {
         loginPage
                 .openPage(LOGIN_PAGE_URL) //открываем страницу логина
@@ -52,7 +52,7 @@ public class ProjectCRUDTest extends BaseTest {
 
     @Description("Произвести изменение добавленного проекта. При успешном создании проект будет отображаться на странице 'Dashbord'")
     //описание теста
-    @Test(priority = 3, description = "Произвести изменение добавленного проекта")//название теста
+    @Test(priority = 4, description = "Произвести изменение добавленного проекта")//название теста
     public void updateProject(ITestContext context) {
         loginPage
                 .openPage(LOGIN_PAGE_URL) //открываем страницу логина
@@ -66,7 +66,7 @@ public class ProjectCRUDTest extends BaseTest {
 
     @Description("Произвести удаление проекта. При успешном удалении проекта будет выведено сообщение 'Successfully deleted the project.'")
     //описание теста
-    @Test(priority = 4, description = "Удалить проект")//название теста
+    @Test(priority = 5, description = "Удалить проект")//название теста
     public void deleteProject(ITestContext context) {
         loginPage
                 .openPage(LOGIN_PAGE_URL)//открываем страницу логина
