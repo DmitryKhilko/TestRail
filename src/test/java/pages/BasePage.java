@@ -17,6 +17,7 @@ public abstract class BasePage {
     //Общедоступные локаторы
     String contentHeaderTitleLocator = "//div[contains(@class,'content-header-title')]";
     String messageSuccessLocator = "//div[contains(@class, 'message-success')]"; //сообщение об успешной операции с сущностью (проектом, тест-кейсом)
+
     ITestContext context;
 
     public BasePage(ITestContext context) {

@@ -2,6 +2,7 @@ package pages;
 
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
+import models.TestCase;
 import org.openqa.selenium.By;
 import org.testng.ITestContext;
 
@@ -26,36 +27,30 @@ public class TestCaseAddCasePage extends BasePage{
     }
 
     @Step("Создать новый тест-кейс")
-    public TestCaseDetailsPage createNewTestCase(String title, String sectionName, String typeTestCase, String preconditions, String steps, String expectedResult) {
-        log.debug("Тест " + context.getAttribute("testName") + ": перейти на вкладку 'Test cases' проекта для добавления нового раздела");
-        $(By.xpath(projectTabSuitesLocator)).click();
-
-        log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку '+Add Case' для перехода к созданию нового тест-кейса");
-        $(By.xpath(addCaseButtonLocator)).click();
-
-        log.debug("Тест " + context.getAttribute("testName") + ": ввести название тест-кейса '" + title + "'");
+    public TestCaseDetailsPage createNewTestCase(TestCase testCase) {
+        log.debug("Тест " + context.getAttribute("testName") + ": ввести название тест-кейса '" + testCase.getTitle() + "'");
         $(By.xpath(titleTestCase)).clear(); //сначала очищаем поле
-        $(By.xpath(titleTestCase)).setValue(title); //потом вводим текст
+        $(By.xpath(titleTestCase)).setValue(testCase.getTitle()); //потом вводим текст
 
-        log.debug("Тест " + context.getAttribute("testName") + ": выбрать в раскрывающемся списке 'Section' раздел '" + sectionName + "'");
+        log.debug("Тест " + context.getAttribute("testName") + ": выбрать в раскрывающемся списке 'Section' раздел '" + testCase.getSection() + "'");
         $(By.xpath(String.format(dropdownLocator, "Section"))).click(); //щелкаем по раскрывающемуся списку
-        $(By.xpath(String.format(optionLocator, sectionName))).click(); //выбираем нужный элемент списка
+        $(By.xpath(String.format(optionLocator, testCase.getSection()))).click(); //выбираем нужный элемент списка
 
-        log.debug("Тест " + context.getAttribute("testName") + ": выбрать в раскрывающемся списке 'Type' раздел '" + typeTestCase + "'");
+        log.debug("Тест " + context.getAttribute("testName") + ": выбрать в раскрывающемся списке 'Type' раздел '" + testCase.getType() + "'");
         $(By.xpath(String.format(dropdownLocator, "Type"))).click(); //щелкаем по раскрывающемуся списку
-        $(By.xpath(String.format(optionLocator, typeTestCase))).click(); //выбираем нужный элемент списка
+        $(By.xpath(String.format(optionLocator, testCase.getType()))).click(); //выбираем нужный элемент списка
 
-        log.debug("Тест " + context.getAttribute("testName") + ": ввести предусловия для тест-кейса: " + preconditions);
+        log.debug("Тест " + context.getAttribute("testName") + ": ввести предусловия для тест-кейса: " + testCase.getPreconditions());
         $(By.xpath(preconditionsLocator)).clear(); //сначала очищаем поле
-        $(By.xpath(preconditionsLocator)).setValue(preconditions); //потом вводим текст
+        $(By.xpath(preconditionsLocator)).setValue(testCase.getPreconditions()); //потом вводим текст
 
-        log.debug("Тест " + context.getAttribute("testName") + ": ввести шаги для тест-кейса: " + steps);
+        log.debug("Тест " + context.getAttribute("testName") + ": ввести шаги для тест-кейса: " + testCase.getSteps());
         $(By.xpath(stepsLocator)).clear(); //сначала очищаем поле
-        $(By.xpath(stepsLocator)).setValue(steps); //потом вводим текст
+        $(By.xpath(stepsLocator)).setValue(testCase.getSteps()); //потом вводим текст
 
-        log.debug("Тест " + context.getAttribute("testName") + ": ввести ожидаемый результат для тест-кейса: " + expectedResult);
+        log.debug("Тест " + context.getAttribute("testName") + ": ввести ожидаемый результат для тест-кейса: " + testCase.getExpectedResult());
         $(By.xpath(expectedResultLocator)).clear(); //сначала очищаем поле
-        $(By.xpath(expectedResultLocator)).setValue(expectedResult); //потом вводим текст
+        $(By.xpath(expectedResultLocator)).setValue(testCase.getExpectedResult()); //потом вводим текст
 
         log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку 'Add Test Case' для создания тест-кейса");
         $(By.xpath(addTestCaseButtonLocator)).click(); //наводим курсор на название раздела

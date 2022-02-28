@@ -13,7 +13,8 @@ public class TestCaseAddSectionPage extends BasePage{
     String projectTabSuitesLocator = "//a[@id='navigation-suites']"; //вкладка проекта "Test Cases"
     String addSectionButtonLocator = "//a[@id='addSectionInline']"; //кнопка "Add Section"
     String nameSectionDialogLocator = "//div[@id='dialog-ident-editSectionDialog']//input[@id='editSectionName']"; //поле ввода Name диалогового окна 'Add Section'
-    String descriptionSectionDialogLocator = "//div[@id='dialog-ident-editSectionDialog']//div[@id='editSectionDescription_display']"; //поле ввода Description диалогового окна 'Add Section'
+    //String descriptionSectionDialogLocator = "//div[@id='dialog-ident-editSectionDialog']//div[contains(@class,'textarea')]"; //поле ввода Description диалогового окна 'Add Section'
+    String descriptionSectionDialogLocator = "//div[@id= 'editSectionDescription_display']"; //поле ввода Description диалогового окна 'Add Section'
     String addSectionButtonDialogLocator = "//div[@id='dialog-ident-editSectionDialog']//button[@id='editSectionSubmit']"; //кнопка 'Add Section' диалогового окна 'Add Section'
 
     public TestCaseAddSectionPage(ITestContext context) {
@@ -34,6 +35,7 @@ public class TestCaseAddSectionPage extends BasePage{
 
         log.debug("Тест " + context.getAttribute("testName") + ": ввести в поле ввода Description значение '" + description + "'");
         $(By.xpath(descriptionSectionDialogLocator)).clear(); //сначала очищаем поле
+        //div[@contenteditable]
         $(By.xpath(descriptionSectionDialogLocator)).setValue(description); //потом вводим текст
 
         log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку 'Add Section' для создания раздела");

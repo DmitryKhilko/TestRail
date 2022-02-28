@@ -30,8 +30,40 @@ public abstract class BaseTest {
     public TestCaseAddSectionPage testCaseAddSectionPage;
     public TestCaseAddCasePage testCaseAddCasePage;
     public TestCaseDetailsPage testCaseDetailsPage;
+    public TestRunPage testRunPage;
+    public TestRunAddPage testRunAddPage;
+    public TestRunDetailsPage testRunDetailsPage;
 
     public String email, password, userName;
+
+    //Константы, связанные с тестовыми данными
+    public static String PROJECT_NAME1 = "Проект 1 (UI)";
+    public static String PROJECT_NAME2 = "Проект 2 (UI)";
+    public static String PROJECT_NAME3 = "Проект 3 (UI)";
+    public static String PROJECT_NAME4 = "Проект 4 (UI)";
+    public static String PROJECT_ANNOUNCEMENT_TEXT = "Ссылка на базу знаний...";
+    public static int PROJECT_SUITE_MODE_NUMBER = 0; //Use a single repository for all cases (recommended)
+    public static String PROJECT_SUCCESS_DELETION_MESSAGE = "Successfully deleted the project."; //сообщение об успехе создания сущности
+
+    public static String SECTION_NAME = "Модуль 1";
+    public static String SECTION_DESCRIPTION = "Описание модуля...";
+
+    public static String TESTCASE_PAGETITLE = "Add Test Case";
+    public static String TESTCASE_TITLE = "Тест-кейс 1";
+    public static String TESTCASE_TEMPLATE = "Test Case (Text)";
+    public static String TESTCASE_TYPE = "Functional";
+    public static String TESTCASE_PRYORITY = "Medium";
+    public static String TESTCASE_AUTOMATIONTYPE = "None";
+    public static String TESTCASE_SUCCESS_ADDED_MESSAGE = "Successfully added the new test case. Add another";
+
+    public static String TESTRUN_PAGETITLE = "Add Test Run";
+    public static String TESTRUN_NAME = "Test Run 1";
+    public static String TESTRUN_MILESTONE = "Sprint 1";
+    public static String TESTRUN_ASSIGN_TO = "Me";
+    public static String TESTRUN_TESTCASE_CHOICE = "Include all test cases";
+
+
+
 
     @Parameters({"BROWSER"}) //параметр из файла regression_multi_browser.xml (для запуска тестов в нескольких браузерах параллельно)
     @BeforeMethod (description = "Настроить и открыть браузер")//Предусловие
@@ -52,7 +84,7 @@ public abstract class BaseTest {
                 break;
         }
 
-        Configuration.headless = true; // браузер запускается без UI. Тесты ускоряются и становятся более стабильными. Браузер использует меньше ОЗУ (где-то в 3 раза). Этот режим просто необходим при параллелоьном запуске тестов
+        //Configuration.headless = true; // браузер запускается без UI. Тесты ускоряются и становятся более стабильными. Браузер использует меньше ОЗУ (где-то в 3 раза). Этот режим просто необходим при параллелоьном запуске тестов
         Configuration.browserPosition = "0x0"; //команда задает позицию левого верхнего угла браузера. Без нее браузер при запуске смещен немного вправо, что может привести к невидимости каких-то элементов.
         Configuration.browserSize = "1920x1080"; //задает разрешение, с каким запускается браузер. Этот параметр, как и виды браузеров важен и может потребоваться тестировать на разных разрешениях.
         Configuration.timeout = 10000; // неявное ожидание в милисекундах (10 секунд), указывающее на то, какое максимальное количество времени Selenium будет дожидаться появления элемента (аналог implicitlyWait)
@@ -79,6 +111,11 @@ public abstract class BaseTest {
         testCaseAddSectionPage = new TestCaseAddSectionPage(context);
         testCaseAddCasePage = new TestCaseAddCasePage(context);
         testCaseDetailsPage = new TestCaseDetailsPage(context);
+        testRunPage = new TestRunPage(context);
+        testRunAddPage = new TestRunAddPage(context);
+        testRunDetailsPage = new TestRunDetailsPage(context);
+
+
     }
 
     @AfterMethod(alwaysRun = true, description = "Закрыть браузер") //Постусловие
