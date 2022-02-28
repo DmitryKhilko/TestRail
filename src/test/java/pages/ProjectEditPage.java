@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 @Log4j2
-public class EditProjectPage extends BasePage{
+public class ProjectEditPage extends BasePage{
 
     public static final String EDIT_PROJECT_PAGE_TITLE = "Edit Project";
     //String addProgectButtonLocator = "//a[@id='sidebar-projects-add']"; // кнопка Add Project на странице Dashbord (на слайдбаре)
@@ -20,7 +20,7 @@ public class EditProjectPage extends BasePage{
     String suiteModeLocator = "//input[@name='suite_mode']"; // группа элементов Suite Mode
     String saveProjectButtonLocator = "//button[@id='accept']";
 
-    public EditProjectPage(ITestContext context) {
+    public ProjectEditPage(ITestContext context) {
         super(context);
     }
 

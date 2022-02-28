@@ -15,7 +15,7 @@ import static pages.LoginPage.LOGIN_PAGE_URL;
 public class PageOpen extends BaseTest {
 
     @Description("Перейти на страницу 'My Settings'. Проверить после входа на страницу наличие заголовка страницы - 'My Settings'") //описание теста
-    @Test(priority = 1, description = "Перейти на страницу 'My Settings'")//название теста, название группы
+    @Test(priority = 6, description = "Перейти на страницу 'My Settings'")//название теста, название группы
     public void openMySettingsPage(ITestContext context) {
          loginPage
                 .openPage(LOGIN_PAGE_URL) //открываем приложение
@@ -25,7 +25,7 @@ public class PageOpen extends BaseTest {
     }
 
     @Description("Перейти на страницу 'Dashboard'. Проверить после входа на страницу наличие заголовка страницы - 'All Projects'") //описание теста
-    @Test(priority = 2, description = "Перейти на страницу 'Dashboard'")//название теста, название группы
+    @Test(priority = 7, description = "Перейти на страницу 'Dashboard'")//название теста, название группы
     public void openDashboardPage(ITestContext context) {
         loginPage
                 .openPage(LOGIN_PAGE_URL) //открываем приложение
@@ -35,7 +35,7 @@ public class PageOpen extends BaseTest {
     }
 
     @Description("Перейти на страницу 'Overview'. Проверить после входа на страницу наличие заголовка страницы - 'Overview'") //описание теста
-    @Test(priority = 3, description = "Перейти на страницу 'Overview'")//название теста, название группы
+    @Test(priority = 8, description = "Перейти на страницу 'Overview'")//название теста, название группы
     public void openAdministrationPage(ITestContext context) {
         loginPage
                 .openPage(LOGIN_PAGE_URL) //открываем приложение
@@ -45,7 +45,7 @@ public class PageOpen extends BaseTest {
     }
 
     @Description("Перейти на страницу 'Projects'. Проверить после входа на страницу наличие заголовка страницы - 'Projects'") //описание теста
-    @Test(priority = 4, description = "Перейти на страницу 'Projects'")//название теста, название группы
+    @Test(priority = 9, description = "Перейти на страницу 'Projects'")//название теста, название группы
     public void openProjectsPage(ITestContext context) {
         loginPage
                 .openPage(LOGIN_PAGE_URL) //открываем приложение
@@ -57,7 +57,7 @@ public class PageOpen extends BaseTest {
     }
 
     @Description("Произвести выход из приложения. Проверить после выхода наличие на странице логина кнопки 'Log in'")
-    @Test (priority = 5, description = "Выйти из приложения")
+    @Test (priority = 10, description = "Выйти из приложения")
     public void logout(ITestContext context) {
         loginPage
                 .openPage(LOGIN_PAGE_URL) //открываем приложение

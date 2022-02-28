@@ -16,6 +16,7 @@ public abstract class BasePage {
 
     //Общедоступные локаторы
     String contentHeaderTitleLocator = "//div[contains(@class,'content-header-title')]";
+    String messageSuccessLocator = "//div[contains(@class, 'message-success')]"; //сообщение об успешной операции с сущностью (проектом, тест-кейсом)
     ITestContext context;
 
     public BasePage(ITestContext context) {
@@ -28,5 +29,11 @@ public abstract class BasePage {
     public SelenideElement pageTitle() {
         log.debug("Тест " + context.getAttribute("testName") + ": возвратить элемент - заголовок страницы");
         return $(By.xpath(contentHeaderTitleLocator));
+    }
+
+    //Метод возвращает вэб-элемент - надпись об успешной операции с сущностью (удаление проекта, создание тест-кейса и т.д.)
+    public SelenideElement projectActionResultMessage() {
+        log.debug("Тест " + context.getAttribute("testName") + ": надпись об успешной операции с сущностью");
+        return $(By.xpath(messageSuccessLocator));
     }
 }

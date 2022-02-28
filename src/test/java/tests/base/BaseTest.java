@@ -23,11 +23,13 @@ public abstract class BaseTest {
     public DashbordPage dashbordPage;
     public AdminOverviewPage adminOverviewPage;
     public AdminProjectsPage adminProjectsPage;
-    public AddProjectPage addProjectPage;
-    public EditProjectPage editProjectPage;
-    public ProjectPage projectPage;
-    public SectionPage sectionPage;
-
+    public ProjectAddPage projectAddPage;
+    public ProjectEditPage projectEditPage;
+    public ProjectOverviewPage projectOverviewPage;
+    public TestCasePage testCasePage;
+    public TestCaseAddSectionPage testCaseAddSectionPage;
+    public TestCaseAddCasePage testCaseAddCasePage;
+    public TestCaseDetailsPage testCaseDetailsPage;
 
     public String email, password, userName;
 
@@ -61,7 +63,6 @@ public abstract class BaseTest {
         password = System.getenv().getOrDefault("TESTRAIL_PASSWORD", PropertyReader.getProperty("testrail.password")); //команда, берущая значение для переменной или с настроек CI (TESTRAIL_PASSWORD) или из настройки testrail.password файла config.properties
         userName = System.getenv().getOrDefault("TESTRAIL_USERNAME", PropertyReader.getProperty("testrail.username")); //команда, берущая значение для переменной или с настроек CI (TESTRAIL_USERNAME) или из настройки testrail.username файла config.properties
 
-
         context.setAttribute("testName", result.getMethod().getMethodName()); //передаем имя выполняемого теста в методы тестового фреймворка для наглядного формирования логов
 
         //Инициализация страниц (которые описаны в пакете pages), с которыми мы будем работать в тестах
@@ -71,10 +72,13 @@ public abstract class BaseTest {
         dashbordPage = new DashbordPage(context);
         adminOverviewPage = new AdminOverviewPage(context);
         adminProjectsPage = new AdminProjectsPage(context);
-        addProjectPage = new AddProjectPage(context);
-        editProjectPage = new EditProjectPage(context);
-        projectPage = new ProjectPage(context);
-        sectionPage = new SectionPage(context);
+        projectAddPage = new ProjectAddPage(context);
+        projectEditPage = new ProjectEditPage(context);
+        projectOverviewPage = new ProjectOverviewPage(context);
+        testCasePage = new TestCasePage(context);
+        testCaseAddSectionPage = new TestCaseAddSectionPage(context);
+        testCaseAddCasePage = new TestCaseAddCasePage(context);
+        testCaseDetailsPage = new TestCaseDetailsPage(context);
     }
 
     @AfterMethod(alwaysRun = true, description = "Закрыть браузер") //Постусловие

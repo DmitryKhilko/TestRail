@@ -51,7 +51,7 @@ public class ProjectAPITest extends BaseAPITest {
     @DataProvider(name = "updateProjectData")
     public Object[][] updateProjectData() {
         return new Object[][]{
-                {"Проект 2_обновлено", "Описание проекта: обновление", false}
+                {"Проект 2 (API)_обновлено", "Описание проекта: обновление", false}
         };
     }
 
