@@ -6,6 +6,7 @@
 <!--        <listener class-name="tests.base.AnnotationTransformer"/>-->
 <!--    </listeners>-->
 
+
     <parameter name="BROWSER" value="${BROWSER}"/>
 
     <test name="test 1">
