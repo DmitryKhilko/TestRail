@@ -2,6 +2,8 @@ package tests;
 
 import io.qameta.allure.Description;
 import lombok.extern.log4j.Log4j2;
+import models.Section;
+import models.SectionFactory;
 import models.TestCase;
 import models.TestCaseFactory;
 import org.testng.ITestContext;
@@ -24,16 +26,25 @@ public class TestCaseCRUDTest extends BaseTest {
         loginPage
                 .openPage(LOGIN_PAGE_URL) //открываем страницу логина
                 .login(email, password); //email и password - переменные, берущие значения из файла config.properties
+
         log.debug("Тест " + context.getAttribute("testName") + ": создать новый проект '" + PROJECT_NAME3 + "'");
         projectAddPage
                 .createNewProject(PROJECT_NAME3, PROJECT_ANNOUNCEMENT_TEXT, PROJECT_SUITE_MODE_NUMBER);
+
         log.debug("Тест " + context.getAttribute("testName") + ": открыть проект '" + PROJECT_NAME3 + "'");
         headerPage
                 .selectMenuItemDashboard()
                 .openProject(PROJECT_NAME3);
+
+        log.debug("Тест " + context.getAttribute("testName") + ": перейти к созданию нового раздела");
+        testCasePage
+                .addNewSection();
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать экземпляр класса конструктора");
+        Section section = SectionFactory.get();
         log.debug("Тест " + context.getAttribute("testName") + ": создать новый раздел '" + SECTION_NAME + "'");
         testCaseAddSectionPage
-                .createNewSection(SECTION_NAME, SECTION_DESCRIPTION);
+                .createNewSection(section);
     }
 
     @AfterMethod(description = "После проверки работоспособности функционала, связанного с тест-ранами, удаляем проект")

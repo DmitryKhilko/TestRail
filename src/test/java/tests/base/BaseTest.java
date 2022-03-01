@@ -45,8 +45,8 @@ public abstract class BaseTest {
     public static int PROJECT_SUITE_MODE_NUMBER = 0; //Use a single repository for all cases (recommended)
     public static String PROJECT_SUCCESS_DELETION_MESSAGE = "Successfully deleted the project."; //сообщение об успехе создания сущности
 
+    public static String SECTION_DIALOGTITLE = "Add Section";
     public static String SECTION_NAME = "Модуль 1";
-    public static String SECTION_DESCRIPTION = "Описание модуля...";
 
     public static String TESTCASE_PAGETITLE = "Add Test Case";
     public static String TESTCASE_TITLE = "Тест-кейс 1";

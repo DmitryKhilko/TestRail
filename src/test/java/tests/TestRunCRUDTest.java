@@ -2,10 +2,7 @@ package tests;
 
 import io.qameta.allure.Description;
 import lombok.extern.log4j.Log4j2;
-import models.TestCase;
-import models.TestCaseFactory;
-import models.TestRun;
-import models.TestRunFactory;
+import models.*;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -26,16 +23,27 @@ public class TestRunCRUDTest extends BaseTest {
         loginPage
                 .openPage(LOGIN_PAGE_URL) //открываем страницу логина
                 .login(email, password); //email и password - переменные, берущие значения из файла config.properties
+
         log.debug("Тест " + context.getAttribute("testName") + ": создать новый проект '" + PROJECT_NAME4 + "'");
         projectAddPage
                 .createNewProject(PROJECT_NAME4, PROJECT_ANNOUNCEMENT_TEXT, PROJECT_SUITE_MODE_NUMBER);
+
         log.debug("Тест " + context.getAttribute("testName") + ": открыть проект '" + PROJECT_NAME4 + "'");
         headerPage
                 .selectMenuItemDashboard()
                 .openProject(PROJECT_NAME4);
+
+        log.debug("Тест " + context.getAttribute("testName") + ": перейти к созданию нового раздела");
+        log.debug("Тест " + context.getAttribute("testName") + ": проверить успешность открытия диалога создания раздела - заголовок на откывшемся диалоге '" + SECTION_DIALOGTITLE + "'");
+        testCasePage
+                .addNewSection()
+                .dialogTitle().shouldHave(exactText(SECTION_DIALOGTITLE));
+
+        log.debug("Тест " + context.getAttribute("testName") + ": создать экземпляр класса конструктора");
+        Section section = SectionFactory.get();
         log.debug("Тест " + context.getAttribute("testName") + ": создать новый раздел '" + SECTION_NAME + "'");
         testCaseAddSectionPage
-                .createNewSection(SECTION_NAME, SECTION_DESCRIPTION);
+                .createNewSection(section);
 
         log.debug("Тест " + context.getAttribute("testName") + ": перейти к созданию нового тест-кейса");
         testCasePage

@@ -13,8 +13,8 @@ public class TestCasePage extends BasePage{
 
     String projectTabSuitesLocator = "//a[@id='navigation-suites']"; //вкладка проекта "Test Cases"
     String addCaseButtonLocator = "//span[contains(text(),'Add Case')]"; //кнопка "Add Case"
+    String addSectionButtonLocator = "//a[@id='addSectionInline']"; //кнопка "Add Section"
     String nameSectionTreeLocator = "//div[@id='groupTreeContent']//span[contains(@id,'sectionName')]"; //локатор элемента раздела в дереве разделов
-
     String nameSectionGroupsLocator = "//div[@id='groups']//span[contains(text(),'%s')]"; //локатор элемента раздела с конкретным именем на странице Test Cases
     String iconDeleteSectionLocator = "//div[@id='groups']//span[contains(text(),'%s')]/ancestor::div[@class='grid-title']//div[contains(@class,'icon-small-delete')]"; // кружочeк с крестиком для удаления раздела на странице
     String deleteCheckboxLocator = "//div[@id='deleteDialog']//input[@name='deleteCheckbox']"; // чекбокс на даилоговом окне подтверждения удаления проекта
@@ -27,6 +27,17 @@ public class TestCasePage extends BasePage{
     //*****************************************************************************************************************************************
     // Методы для работы с разделами (section)
     //*****************************************************************************************************************************************
+
+    @Step("Переход к созданию нового тест-кейса")
+    public TestCaseAddSectionPage addNewSection() {
+
+        log.debug("Тест " + context.getAttribute("testName") + ": перейти на вкладку 'Test cases' проекта для добавления нового раздела");
+        $(By.xpath(projectTabSuitesLocator)).click();
+
+        log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку '+Add Section' для перехода к созданию нового раздела");
+        $(By.xpath(addSectionButtonLocator)).click();
+        return new TestCaseAddSectionPage(context); //Инициализуем страницу, на которую переходим
+    }
 
     //Метод, возвращающий веб-элемент - элемент дерева разделов с определенным именем для последующей проверки добавления раздела
     public SelenideElement sectionNameInSectionTree() {
@@ -66,8 +77,6 @@ public class TestCasePage extends BasePage{
 
     @Step("Переход к созданию нового тест-кейса")
     public TestCaseAddCasePage addNewTestCase() {
-        log.debug("Тест " + context.getAttribute("testName") + ": перейти на вкладку 'Test cases' проекта для добавления нового раздела");
-        $(By.xpath(projectTabSuitesLocator)).click();
 
         log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку '+Add Case' для перехода к созданию нового тест-кейса");
         $(By.xpath(addCaseButtonLocator)).click();
