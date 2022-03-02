@@ -20,7 +20,7 @@ public abstract class BaseAdapter {
         return
                 given()
                         //.log().all() //выводит всю информацию о запросе, в штатном режиме лучше закоментировать
-                        .header("Authorization", authorizationString) //авторизация по логинуи паролю (этот код достал из Postman)
+                        .header("Authorization", authorizationString) //авторизация по логину и паролю (этот код достал из Postman)
                         //.header("NewToken", "czwdaFxSSHQwLvB6V6ei-phMdiar/73BUHkerBpth") //в TestRail досточно авторизации по логину и паролю, хотя возможен доступ и по токену
                         .header("Content-Type", "application/json") //формат содержимого (отправка)
                         .header("Accept" , "application/json") //формат приема

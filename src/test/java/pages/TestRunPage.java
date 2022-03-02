@@ -22,12 +22,11 @@ public class TestRunPage extends BasePage{
         log.debug("Тест " + context.getAttribute("testName") + ": перейти на вкладку 'Test Runs & Results' проекта для добавления нового тест-рана");
         $(By.xpath(projectTabRunLocator)).click();
 
-        log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку '+Add Case' для перехода к созданию нового тест-кейса");
+        log.debug("Тест " + context.getAttribute("testName") + ": нажать кнопку '+Add Test Run' для перехода к созданию нового тест-кейса");
         $(By.xpath(addTestRunButtonLocator)).click();
 
         return new TestRunAddPage(context); //Инициализуем страницу, на которую переходим
     }
-
 }
 
 
